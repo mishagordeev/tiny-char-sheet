@@ -1,0 +1,93 @@
+{
+    "Name": "Aragorn", 
+    "Level": 5, 
+    "Equipment": [
+        {
+            "item": "Longsword", 
+            "description": "A finely crafted blade."
+        }, 
+        {
+            "item": "Bow", 
+            "description": "A sturdy bow with a quiver of arrows."
+        }, 
+        {
+            "item": "Armor", 
+            "description": "Leather armor providing moderate protection."
+        }
+    ], 
+    "Attributes": {
+        "Dexterity": 14, 
+        "Strength": 16, 
+        "Constitution": 15, 
+        "Intelligence": 10, 
+        "Wisdom": 12, 
+        "Charisma": 13
+    }, 
+    "Class": "Ranger", 
+    "Spells": { 
+        "Level 0": {
+            "checkboxes_state": [
+                false, 
+                false, 
+                false, 
+                false
+            ], 
+            "checkboxes": 4, 
+            "spells": [
+                {
+                    "name": "Light", 
+                    "description": "Creates a bright light on an object."
+                }, 
+                {
+                    "name": "Prestidigitation", 
+                    "description": "Performs minor magical tricks."
+                }, 
+                {
+                    "name": "Mage Hand", 
+                    "description": "Creates a spectral hand to manipulate objects."
+                }
+            ]
+        }, 
+        "Level 1": {
+            "checkboxes_state": [
+                false, 
+                false, 
+                false, 
+                false
+            ], 
+            "checkboxes": 4, 
+            "spells": [
+                {
+                    "name": "Magic Missile", 
+                    "description": "Creates magical darts that automatically hit."
+                }, 
+                {
+                    "name": "Shield", 
+                    "description": "Raises your AC by 5 until your next turn."
+                }, 
+                {
+                    "name": "Burning Hands", 
+                    "description": "Releases a cone of fire from your hands."
+                }
+            ]
+        },
+        "Level 2": {
+            "checkboxes_state": [
+                false, 
+                false, 
+                false
+            ], 
+            "checkboxes": 3, 
+            "spells": [
+                {
+                    "name": "Mirror Image", 
+                    "description": "Creates illusory duplicates of yourself."
+                }, 
+                {
+                    "name": "Hold Person", 
+                    "description": "Paralyzes a humanoid target."
+                }
+            ]
+        }
+    }
+}
