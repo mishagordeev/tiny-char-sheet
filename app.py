@@ -20,6 +20,7 @@ logging.debug(f"GOOGLE_APPLICATION_CREDENTIALS: {json_key_str}")
 
 # Проверяем, что переменная окружения установлена
 if json_key_str:
+    logging.debug("IF JSON KEY STR")
     try:
         # Преобразуем строку в объект виртуального файла
         json_file = StringIO(json_key_str)
