@@ -4,9 +4,13 @@ import firebase_admin
 from firebase_admin import credentials
 from io import StringIO
 from flask import Flask
+import logging
 
 # Получаем строку JSON из переменной окружения
 json_key_str = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+
+logging.basicConfig(level=logging.DEBUG)
+logging.debug("Starting the Flask app...")
 
 # Проверяем, что переменная окружения установлена
 if json_key_str:
@@ -51,5 +55,13 @@ app = Flask(__name__)
 #     except Exception as e:
 #         return jsonify({"error": str(e)}), 500
 
-if __name__ == '__main__':
-    app.run(debug=True)
+@app.route("/")
+def home():
+    return "Hello, World!"
+
+@app.route("/test")
+def test():
+    return "This is a test route."
+
+if __name__ == "__main__":
+    app.run()
