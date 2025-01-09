@@ -30,11 +30,12 @@ if json_key_str:
         logging.debug("Firebase initialized successfully.")
         
         # Инициализируем Firestore клиента
-    try:
-        db = firestore.Client.from_service_account_info(json.loads(json_key_str))
-        logging.debug("Firestore client initialized successfully.")
-    except Exception as e:
-        logging.error(f"Error initializing Firestore client: {e}")        
+        
+        try:
+            db = firestore.Client.from_service_account_info(json.loads(json_key_str))
+            logging.debug("Firestore client initialized successfully.")
+        except Exception as e:
+            logging.error(f"Error initializing Firestore client: {e}")
         logging.debug("Firestore client initialized successfully.")
     except json.JSONDecodeError:
         logging.error("Error decoding JSON from the GOOGLE_APPLICATION_CREDENTIALS environment variable.")
