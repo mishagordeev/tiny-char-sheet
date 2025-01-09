@@ -1,16 +1,25 @@
 from flask import Flask, jsonify, request
 import os
-from google.cloud import firestore
-
-# Загружаем JSON ключ из переменной окружения
 import json
-from io import StringIO
+import firebase_admin
+from firebase_admin import credentials
 
-json_key = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
-print(f"GOOGLE_APPLICATION_CREDENTIALS is: {json_key}")
+json_key_str = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 
-if json_key is None or not os.path.exists(json_key):
-    raise ValueError("GOOGLE_APPLICATION_CREDENTIALS is not a valid path or the file doesn't exist.")
+# Проверяем, что переменная окружения установлена
+if json_key_str:
+    try:
+        # Преобразуем строку JSON в объект Python (словарь)
+        json_key = json.loads(json_key_str)
+        
+        # Используем полученные данные для инициализации Firebase
+        cred = credentials.Certificate(json_key)
+        firebase_admin.initialize_app(cred)
+        print("Firebase app initialized successfully.")
+    except json.JSONDecodeError:
+        print("Error decoding JSON from the GOOGLE_APPLICATION_CREDENTIALS environment variable.")
+else:
+    print("GOOGLE_APPLICATION_CREDENTIALS environment variable is not set.")
 
 # Инициализация Flask приложения
 app = Flask(__name__)
