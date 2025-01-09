@@ -9,7 +9,7 @@ from google.cloud import firestore
 
 # Настройка логирования
 logging.basicConfig(level=logging.DEBUG)
-logging.debug("Starting the Flask app...")
+print("Starting the Flask app...")
 
 # Инициализация переменной db
 db = None
@@ -33,14 +33,14 @@ if json_key_str:
         
         try:
             db = firestore.Client.from_service_account_info(json.loads(json_key_str))
-            logging.debug("Firestore client initialized successfully.")
+            print("Firestore client initialized successfully.")
         except Exception as e:
-            logging.error(f"Error initializing Firestore client: {e}")
+            print(f"Error initializing Firestore client: {e}")
         logging.debug("Firestore client initialized successfully.")
     except json.JSONDecodeError:
         logging.error("Error decoding JSON from the GOOGLE_APPLICATION_CREDENTIALS environment variable.")
     except Exception as e:
-        logging.error(f"Unexpected error during initialization: {e}")
+        print(f"Unexpected error during initialization: {e}")
 else:
     logging.error("GOOGLE_APPLICATION_CREDENTIALS environment variable is not set.")
 
