@@ -7,6 +7,7 @@ import json
 from io import StringIO
 
 json_key = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+print(f"GOOGLE_APPLICATION_CREDENTIALS: {json_key}")
 if json_key:
     key_file = StringIO(json_key)  # Преобразуем строку в файловый объект
     db = firestore.Client.from_service_account_json(key_file)
