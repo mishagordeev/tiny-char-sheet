@@ -22,6 +22,16 @@ logging.debug(f"GOOGLE_APPLICATION_CREDENTIALS: {json_key_str}")
 if json_key_str:
     logging.debug("IF JSON KEY STR")
     try:
+        logging.debug(f"Attempting to load JSON from GOOGLE_APPLICATION_CREDENTIALS: {json_key_str}")
+        json_data = json.loads(json_key_str)
+        logging.debug(f"Successfully parsed JSON: {json_data}")
+    except json.JSONDecodeError as e:
+        logging.debug(f"JSONDecodeError: {e}")
+        raise
+
+
+
+    try:
         # Преобразуем строку в объект виртуального файла
         json_file = StringIO(json_key_str)
         
