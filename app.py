@@ -46,6 +46,7 @@ else:
 
 # Инициализация Flask приложения
 app = Flask(__name__)
+app.debug = True
 
 # Коллекция, где будут храниться данные
 COLLECTION_NAME = "character_data"
