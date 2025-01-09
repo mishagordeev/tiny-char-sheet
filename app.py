@@ -25,30 +25,30 @@ else:
     print("GOOGLE_APPLICATION_CREDENTIALS environment variable is not set.")
 
 # Инициализация Flask приложения
-app = Flask(__name__)
+# app = Flask(__name__)
 
-# Коллекция, где будут храниться данные
-COLLECTION_NAME = "character_data"
+# # Коллекция, где будут храниться данные
+# COLLECTION_NAME = "character_data"
 
-@app.route('/')
-def character_sheet():
-    doc_ref = db.collection(COLLECTION_NAME).document('main')
-    doc = doc_ref.get()
-    if doc.exists:
-        character_data = doc.to_dict()
-        return jsonify(character_data)
-    else:
-        return jsonify({"error": "No character data found."}), 404
+# @app.route('/')
+# def character_sheet():
+#     doc_ref = db.collection(COLLECTION_NAME).document('main')
+#     doc = doc_ref.get()
+#     if doc.exists:
+#         character_data = doc.to_dict()
+#         return jsonify(character_data)
+#     else:
+#         return jsonify({"error": "No character data found."}), 404
 
-@app.route('/update', methods=['POST'])
-def update_character_sheet():
-    try:
-        character_data = request.json
-        doc_ref = db.collection(COLLECTION_NAME).document('main')
-        doc_ref.set(character_data)
-        return jsonify({"status": "success"})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+# @app.route('/update', methods=['POST'])
+# def update_character_sheet():
+#     try:
+#         character_data = request.json
+#         doc_ref = db.collection(COLLECTION_NAME).document('main')
+#         doc_ref.set(character_data)
+#         return jsonify({"status": "success"})
+#     except Exception as e:
+#         return jsonify({"error": str(e)}), 500
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# if __name__ == '__main__':
+#     app.run(debug=True)
