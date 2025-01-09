@@ -3,6 +3,7 @@ import json
 import firebase_admin
 from firebase_admin import credentials
 from io import StringIO
+from flask import Flask
 
 # Получаем строку JSON из переменной окружения
 json_key_str = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
@@ -25,7 +26,7 @@ else:
     print("GOOGLE_APPLICATION_CREDENTIALS environment variable is not set.")
 
 # Инициализация Flask приложения
-# app = Flask(__name__)
+app = Flask(__name__)
 
 # # Коллекция, где будут храниться данные
 # COLLECTION_NAME = "character_data"
@@ -50,5 +51,5 @@ else:
 #     except Exception as e:
 #         return jsonify({"error": str(e)}), 500
 
-# if __name__ == '__main__':
-#     app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True)
