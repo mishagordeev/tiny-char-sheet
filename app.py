@@ -7,12 +7,10 @@ import json
 from io import StringIO
 
 json_key = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
-print(f"GOOGLE_APPLICATION_CREDENTIALS: {json_key}")
-if json_key:
-    key_file = StringIO(json_key)  # Преобразуем строку в файловый объект
-    db = firestore.Client.from_service_account_json(key_file)
-else:
-    raise Exception("GOOGLE_APPLICATION_CREDENTIALS not set")
+print(f"GOOGLE_APPLICATION_CREDENTIALS is: {json_key}")
+
+if json_key is None or not os.path.exists(json_key):
+    raise ValueError("GOOGLE_APPLICATION_CREDENTIALS is not a valid path or the file doesn't exist.")
 
 # Инициализация Flask приложения
 app = Flask(__name__)
