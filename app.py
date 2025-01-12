@@ -38,13 +38,13 @@ if json_key_str:
                 logging.debug(f"Temp file created at: {temp_file_path}")
                 print(f"JSON DATA: {json_data}")
                 # Инициализация Firebase Admin
-                # cred = credentials.Certificate(json_data)
-                # firebase_admin.initialize_app(cred)
+                cred = credentials.Certificate(temp_file_path)
+                firebase_admin.initialize_app(cred)
                 logging.debug("Firebase initialized successfully.")
                 print("Firebase initialized successfully.")
 
                 # Инициализация Firestore клиента
-                db = firestore.Client.from_service_account_json(temp_file_path)
+                db = firestore.Client.from_service_account_info(temp_file_path)
                 logging.debug("Firestore client initialized successfully.")
                 print("Firestore client initialized successfully.")
 
