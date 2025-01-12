@@ -1,5 +1,6 @@
 import os
 import json
+import tempfile
 import firebase_admin
 from firebase_admin import credentials
 from io import StringIO
@@ -34,20 +35,20 @@ if json_key_str:
         json_data = json.loads(json_key_str)
         logging.debug(f"Successfully parsed JSON: {json_data}")
     except json.JSONDecodeError as e:
-        logging.debug(f"JSONDecodeError: {e}")
+        logging.error(f"JSONDecodeError: {e}")
         raise
 
 
 
     try:
-        # Преобразуем строку в объект виртуального файла
-        json_file = StringIO(json_key_str)
-        
-        # Загружаем учетные данные из виртуального файла
-        cred = credentials.Certificate(json.load(json_file))
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".json") as temp_file:
+            temp_file.write(json_key_str.encode('utf-8'))
+            temp_file_path = temp_file.name
+
+        # Инициализируем Firebase Admin
+        cred = credentials.Certificate(temp_file_path)
         firebase_admin.initialize_app(cred)
         logging.debug("Firebase initialized successfully.")
-        
         # Инициализируем Firestore клиента
         
         try:
