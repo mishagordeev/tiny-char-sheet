@@ -34,6 +34,7 @@ if json_key_str:
         raise
 
     try:
+        print(f"JSON DATA: {json_data}")
         # Инициализация Firebase Admin
         cred = firebase_admin.credentials.Certificate(json_data)
         firebase_admin.initialize_app(cred)
