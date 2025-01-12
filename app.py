@@ -3,7 +3,6 @@ import json
 import tempfile
 import firebase_admin
 from firebase_admin import credentials
-from io import StringIO
 from flask import Flask, jsonify, request
 import logging
 from google.cloud import firestore
@@ -12,16 +11,10 @@ from google.cloud import firestore
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s [%(levelname)s] %(message)s",
-    handlers=[
-        logging.StreamHandler()
-    ]
+    handlers=[logging.StreamHandler()]
 )
 
-logging.debug("Debugging is enabled.")
-logging.info("Info message.")
-logging.warning("Warning message.")
-logging.error("Error message.")
-logging.critical("Critical error!")
+print("Starting application...")
 
 # Инициализация переменной db
 db = None
@@ -29,48 +22,51 @@ db = None
 # Получаем строку JSON из переменной окружения
 json_key_str = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 
-# Проверяем, что переменная окружения установлена
 if json_key_str:
     try:
+        # Преобразуем строку JSON в словарь
         json_data = json.loads(json_key_str)
-        logging.debug(f"Successfully parsed JSON: {json_data}")
+        logging.debug("Successfully parsed JSON.")
+        print("Successfully parsed JSON.")
     except json.JSONDecodeError as e:
         logging.error(f"JSONDecodeError: {e}")
+        print(f"JSONDecodeError: {e}")
         raise
 
-
-
     try:
+        # Создаём временный файл для Firebase Admin
         with tempfile.NamedTemporaryFile(delete=False, suffix=".json", mode="w") as temp_file:
-            json.dump(json_data, temp_file)  # Записываем данные в файл
+            json.dump(json_data, temp_file)
             temp_file_path = temp_file.name
             logging.debug(f"Temp File Path: {temp_file_path}")
+            print(f"Temp File Path: {temp_file_path}")
 
-        # Инициализируем Firebase Admin
-        cred = firebase_admin.credentials.Certificate(temp_file_path).get_credential()
+        # Инициализация Firebase Admin
+        cred = firebase_admin.credentials.Certificate(temp_file_path)
         firebase_admin.initialize_app(cred)
         logging.debug("Firebase initialized successfully.")
-        # Инициализируем Firestore клиента
-        os.remove(temp_file_path)
-        
-        try:
-            db = firestore.Client.from_service_account_info(json.loads(json_key_str))
-            logging.debug("Firestore client initialized successfully.")
-        except Exception as e:
-            logging.error(f"Error initializing Firestore client: {e}")
+        print("Firebase initialized successfully.")
+
+        # Инициализация Firestore клиента
+        db = firestore.Client.from_service_account_info(json_data)
         logging.debug("Firestore client initialized successfully.")
-    except json.JSONDecodeError:
-        logging.error("Error decoding JSON from the GOOGLE_APPLICATION_CREDENTIALS environment variable.")
+        print("Firestore client initialized successfully.")
+
     except Exception as e:
         logging.error(f"Unexpected error during initialization: {e}")
+        print(f"Unexpected error during initialization: {e}")
+        raise
+    finally:
+        if os.path.exists(temp_file_path):
+            os.remove(temp_file_path)
 else:
     logging.error("GOOGLE_APPLICATION_CREDENTIALS environment variable is not set.")
+    print("GOOGLE_APPLICATION_CREDENTIALS environment variable is not set.")
 
-# Инициализация Flask приложения
+# Flask приложение
 app = Flask(__name__)
 app.debug = True
 
-# Коллекция, где будут храниться данные
 COLLECTION_NAME = "character_data"
 
 @app.route('/')
@@ -86,6 +82,7 @@ def character_sheet():
         else:
             return jsonify({"error": "No character data found."}), 404
     except Exception as e:
+        logging.error(f"Error fetching document: {e}")
         return jsonify({"error": str(e)}), 500
 
 @app.route('/update', methods=['POST'])
@@ -98,6 +95,7 @@ def update_character_sheet():
         doc_ref.set(character_data)
         return jsonify({"status": "success"})
     except Exception as e:
+        logging.error(f"Error updating document: {e}")
         return jsonify({"error": str(e)}), 500
 
 @app.route("/test")
