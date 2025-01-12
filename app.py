@@ -47,7 +47,7 @@ if json_key_str:
             logging.debug(f"Temp File Path: {temp_file_path}")
 
         # Инициализируем Firebase Admin
-        cred = firebase_admin.credentials.Certificate(temp_file_path)
+        cred = firebase_admin.credentials.Certificate(temp_file_path).get_credential()
         firebase_admin.initialize_app(cred)
         logging.debug("Firebase initialized successfully.")
         # Инициализируем Firestore клиента
