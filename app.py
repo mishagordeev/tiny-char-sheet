@@ -42,7 +42,7 @@ if json_key_str:
             print(f"Temp File Path: {temp_file_path}")
 
         # Инициализация Firebase Admin
-        cred = firebase_admin.credentials.Certificate(temp_file_path)
+        cred = firebase_admin.credentials.Certificate(json_data)
         firebase_admin.initialize_app(cred)
         logging.debug("Firebase initialized successfully.")
         print("Firebase initialized successfully.")
