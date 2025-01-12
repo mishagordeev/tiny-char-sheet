@@ -34,13 +34,6 @@ if json_key_str:
         raise
 
     try:
-        # Создаём временный файл для Firebase Admin
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".json", mode="w") as temp_file:
-            json.dump(json_data, temp_file)
-            temp_file_path = temp_file.name
-            logging.debug(f"Temp File Path: {temp_file_path}")
-            print(f"Temp File Path: {temp_file_path}")
-
         # Инициализация Firebase Admin
         cred = firebase_admin.credentials.Certificate(json_data)
         firebase_admin.initialize_app(cred)
@@ -56,9 +49,6 @@ if json_key_str:
         logging.error(f"Unexpected error during initialization: {e}")
         print(f"Unexpected error during initialization: {e}")
         raise
-    finally:
-        if os.path.exists(temp_file_path):
-            os.remove(temp_file_path)
 else:
     logging.error("GOOGLE_APPLICATION_CREDENTIALS environment variable is not set.")
     print("GOOGLE_APPLICATION_CREDENTIALS environment variable is not set.")
