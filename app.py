@@ -28,28 +28,32 @@ if json_key_str:
         json_data = json.loads(json_key_str)
         logging.debug("Successfully parsed JSON.")
         print("Successfully parsed JSON.")
+
+        try:
+            print(f"JSON DATA: {json_data}")
+            # Инициализация Firebase Admin
+            cred = credentials.Certificate(json_data)
+            firebase_admin.initialize_app(cred)
+            logging.debug("Firebase initialized successfully.")
+            print("Firebase initialized successfully.")
+
+            # Инициализация Firestore клиента
+            db = firestore.Client.from_service_account_info(json_data)
+            logging.debug("Firestore client initialized successfully.")
+            print("Firestore client initialized successfully.")
+
+        except Exception as e:
+            logging.error(f"Unexpected error during initialization: {e}")
+            print(f"Unexpected error during initialization: {e}")
+            raise
+
+
     except json.JSONDecodeError as e:
         logging.error(f"JSONDecodeError: {e}")
         print(f"JSONDecodeError: {e}")
         raise
 
-    try:
-        print(f"JSON DATA: {json_data}")
-        # Инициализация Firebase Admin
-        cred = firebase_admin.credentials.Certificate(json_data)
-        firebase_admin.initialize_app(cred)
-        logging.debug("Firebase initialized successfully.")
-        print("Firebase initialized successfully.")
 
-        # Инициализация Firestore клиента
-        db = firestore.Client.from_service_account_info(json_data)
-        logging.debug("Firestore client initialized successfully.")
-        print("Firestore client initialized successfully.")
-
-    except Exception as e:
-        logging.error(f"Unexpected error during initialization: {e}")
-        print(f"Unexpected error during initialization: {e}")
-        raise
 else:
     logging.error("GOOGLE_APPLICATION_CREDENTIALS environment variable is not set.")
     print("GOOGLE_APPLICATION_CREDENTIALS environment variable is not set.")
