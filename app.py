@@ -9,7 +9,7 @@ from google.cloud import firestore
 
 # Настройка логирования
 logging.basicConfig(level=logging.DEBUG)
-print("Starting the Flask app...")
+logging.debug("Starting the Flask app...")
 
 # Инициализация переменной db
 db = None
