@@ -30,17 +30,23 @@ if json_key_str:
         print("Successfully parsed JSON.")
 
         try:
-            print(f"JSON DATA: {json_data}")
-            # Инициализация Firebase Admin
-            # cred = credentials.Certificate(json_data)
-            # firebase_admin.initialize_app(cred)
-            logging.debug("Firebase initialized successfully.")
-            print("Firebase initialized successfully.")
 
-            # Инициализация Firestore клиента
-            db = firestore.Client.from_service_account_json(json_data)
-            logging.debug("Firestore client initialized successfully.")
-            print("Firestore client initialized successfully.")
+
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".json") as temp_file:
+                temp_file.write(json_key_str.encode("utf-8"))  # Записываем JSON в файл
+                temp_file_path = temp_file.name
+                logging.debug(f"Temp file created at: {temp_file_path}")
+                print(f"JSON DATA: {json_data}")
+                # Инициализация Firebase Admin
+                # cred = credentials.Certificate(json_data)
+                # firebase_admin.initialize_app(cred)
+                logging.debug("Firebase initialized successfully.")
+                print("Firebase initialized successfully.")
+
+                # Инициализация Firestore клиента
+                db = firestore.Client.from_service_account_json(temp_file_path)
+                logging.debug("Firestore client initialized successfully.")
+                print("Firestore client initialized successfully.")
 
         except Exception as e:
             logging.error(f"Unexpected error during initialization: {e}")
