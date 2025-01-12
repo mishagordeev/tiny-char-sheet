@@ -33,7 +33,7 @@ if json_key_str:
 
 
             with tempfile.NamedTemporaryFile(delete=False, suffix=".json") as temp_file:
-                temp_file.write(json_data.encode("utf-8"))  # Записываем JSON в файл
+                temp_file.write(json_data)  # Записываем JSON в файл
                 temp_file_path = temp_file.name
                 logging.debug(f"Temp file created at: {temp_file_path}")
                 print(f"JSON DATA: {json_data}")
