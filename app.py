@@ -8,8 +8,19 @@ import logging
 from google.cloud import firestore
 
 # Настройка логирования
-logging.basicConfig(level=logging.DEBUG)
-logging.debug("Starting the Flask app...")
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[
+        logging.StreamHandler()
+    ]
+)
+
+logging.debug("Debugging is enabled.")
+logging.info("Info message.")
+logging.warning("Warning message.")
+logging.error("Error message.")
+logging.critical("Critical error!")
 
 # Инициализация переменной db
 db = None
