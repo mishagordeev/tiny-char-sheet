@@ -52,14 +52,14 @@ if json_key_str:
         
         try:
             db = firestore.Client.from_service_account_info(json.loads(json_key_str))
-            print("Firestore client initialized successfully.")
+            logging.debug("Firestore client initialized successfully.")
         except Exception as e:
-            print(f"Error initializing Firestore client: {e}")
+            logging.error(f"Error initializing Firestore client: {e}")
         logging.debug("Firestore client initialized successfully.")
     except json.JSONDecodeError:
         logging.error("Error decoding JSON from the GOOGLE_APPLICATION_CREDENTIALS environment variable.")
     except Exception as e:
-        print(f"Unexpected error during initialization: {e}")
+        logging.error(f"Unexpected error during initialization: {e}")
 else:
     logging.error("GOOGLE_APPLICATION_CREDENTIALS environment variable is not set.")
 
