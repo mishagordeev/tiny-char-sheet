@@ -44,9 +44,10 @@ if json_key_str:
         with tempfile.NamedTemporaryFile(delete=False, suffix=".json", mode="w") as temp_file:
             json.dump(json_data, temp_file)  # Записываем данные в файл
             temp_file_path = temp_file.name
+            logging.debug(f"Temp File Path: {temp_file_path}")
 
         # Инициализируем Firebase Admin
-        cred = firebase_admin.credentials.Certificate(json_data)
+        cred = firebase_admin.credentials.Certificate(temp_file_path)
         firebase_admin.initialize_app(cred)
         logging.debug("Firebase initialized successfully.")
         # Инициализируем Firestore клиента
