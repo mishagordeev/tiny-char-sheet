@@ -30,12 +30,6 @@ if json_key_str:
 
         try:
 
-
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".json") as temp_file:
-                temp_file.write(json_data)  # Записываем JSON в файл
-                temp_file_path = temp_file.name
-                print(f"Temp file created at: {temp_file_path}")
-                # Инициализация Firebase Admin
             cred = credentials.Certificate(json_data)
             firebase_admin.initialize_app(cred)
             logging.debug("Firebase initialized successfully.")
