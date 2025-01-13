@@ -18,39 +18,51 @@ print("Starting application...")
 db = None
 
 # Получаем строку JSON из переменной окружения
-json_key_str = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
+# json_key_str = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
 
-if json_key_str:
-    try:
-        # Преобразуем строку JSON в словарь
-        json_data = json.loads(json_key_str)
-        logging.debug("Successfully parsed JSON.")
-        print("Successfully parsed JSON.")
+service_account = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
 
-        try:
-            cred = credentials.Certificate(json_data)
-            firebase_admin.initialize_app(cred)
-            logging.debug("Firebase initialized successfully.")
-            print("Firebase initialized successfully.")
-
-            # Инициализация Firestore клиента
-            db = firestore.client()
-            logging.debug("Firestore client initialized successfully.")
-            print("Firestore client initialized successfully.")
-
-        except Exception as e:
-            logging.error(f"Unexpected error during initialization: {e}")
-            print(f"Unexpected error during initialization: {e}")
-            raise
-
-    except json.JSONDecodeError as e:
-        logging.error(f"JSONDecodeError: {e}")
-        print(f"JSONDecodeError: {e}")
-        raise
-
+# Инициализация приложения Firebase
+if service_account:
+    cred = credentials.Certificate(json.loads(service_account))
+    firebase_admin.initialize_app(cred)
 else:
-    logging.error("GOOGLE_APPLICATION_CREDENTIALS environment variable is not set.")
-    print("GOOGLE_APPLICATION_CREDENTIALS environment variable is not set.")
+    raise ValueError("MY_CREDENTIALS environment variable is not set")
+
+# Создание объекта Firestore
+db = firestore.client()
+
+# if json_key_str:
+#     try:
+#         # Преобразуем строку JSON в словарь
+#         json_data = json.loads(json_key_str)
+#         logging.debug("Successfully parsed JSON.")
+#         print("Successfully parsed JSON.")
+
+#         try:
+#             cred = credentials.Certificate(json_data)
+#             firebase_admin.initialize_app(cred)
+#             logging.debug("Firebase initialized successfully.")
+#             print("Firebase initialized successfully.")
+
+#             # Инициализация Firestore клиента
+#             db = firestore.client()
+#             logging.debug("Firestore client initialized successfully.")
+#             print("Firestore client initialized successfully.")
+
+#         except Exception as e:
+#             logging.error(f"Unexpected error during initialization: {e}")
+#             print(f"Unexpected error during initialization: {e}")
+#             raise
+
+#     except json.JSONDecodeError as e:
+#         logging.error(f"JSONDecodeError: {e}")
+#         print(f"JSONDecodeError: {e}")
+#         raise
+
+# else:
+#     logging.error("GOOGLE_APPLICATION_CREDENTIALS environment variable is not set.")
+#     print("GOOGLE_APPLICATION_CREDENTIALS environment variable is not set.")
 
 # Flask приложение
 app = Flask(__name__)
