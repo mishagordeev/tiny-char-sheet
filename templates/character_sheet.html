@@ -50,6 +50,7 @@
     <script>
 
         function updateCheckbox(level, index, checked) {
+            console.log(`level ${level} index ${index} checked ${checked}`)
             fetch('/update_checkbox', {
                 method: 'POST',
                 headers: {
