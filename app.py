@@ -28,7 +28,6 @@ if json_key_str:
         print("Successfully parsed JSON.")
 
         try:
-
             cred = credentials.Certificate(json_data)
             firebase_admin.initialize_app(cred)
             logging.debug("Firebase initialized successfully.")
@@ -44,12 +43,10 @@ if json_key_str:
             print(f"Unexpected error during initialization: {e}")
             raise
 
-
     except json.JSONDecodeError as e:
         logging.error(f"JSONDecodeError: {e}")
         print(f"JSONDecodeError: {e}")
         raise
-
 
 else:
     logging.error("GOOGLE_APPLICATION_CREDENTIALS environment variable is not set.")
