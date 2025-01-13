@@ -2,7 +2,7 @@ import os
 import json
 import firebase_admin
 from firebase_admin import credentials, firestore
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 import logging
 
 # Настройка логирования
@@ -70,38 +70,46 @@ app.debug = True
 
 COLLECTION_NAME = "character_data"
 
+
+app = Flask(__name__)
+
+# Load JSON data from file
+def load_character_data():
+    with open('character_data.json', 'r') as file:
+        return json.load(file)
+
+# Save JSON data to file
+def save_character_data(data):
+    with open('character_data.json', 'w') as file:
+        json.dump(data, file, indent=4)
+
 @app.route('/')
 def character_sheet():
-    if db is None:
-        return jsonify({"error": "Database is not initialized."}), 500
-    try:
-        doc_ref = db.collection(COLLECTION_NAME).document('main')
-        doc = doc_ref.get()
-        if doc.exists:
-            character_data = doc.to_dict()
-            return jsonify(character_data)
-        else:
-            return jsonify({"error": "No character data found."}), 404
-    except Exception as e:
-        logging.error(f"Error fetching document: {e}")
-        return jsonify({"error": str(e)}), 500
+    character_data = load_character_data()
+    character_data["Spells"] = dict(sorted(character_data["Spells"].items(), key=lambda x: int(x[0].split()[1])))
+    return render_template('character_sheet.html', data=character_data)
 
-@app.route('/update', methods=['POST'])
-def update_character_sheet():
-    if db is None:
-        return jsonify({"error": "Database is not initialized."}), 500
-    try:
-        character_data = request.json
-        doc_ref = db.collection(COLLECTION_NAME).document('main')
-        doc_ref.set(character_data)
-        return jsonify({"status": "success"})
-    except Exception as e:
-        logging.error(f"Error updating document: {e}")
-        return jsonify({"error": str(e)}), 500
+@app.route('/data')
+def get_character_data():
+    character_data = load_character_data()
+    character_data["Spells"] = dict(sorted(character_data["Spells"].items(), key=lambda x: int(x[0].split()[1])))
+    return jsonify(character_data)
 
-@app.route("/test")
-def test():
-    return "This is a test route."
+@app.route('/update_checkbox', methods=['POST'])
+def update_checkbox():
+    data = load_character_data()
+    spell_level = request.json.get('level')
+    checkbox_index = request.json.get('checkbox_index')
+    checked = request.json.get('checked')
+    
+    # Update the checkbox state in the data
+    if spell_level in data['Spells']:
+        if 'checkboxes_state' not in data['Spells'][spell_level]:
+            data['Spells'][spell_level]['checkboxes_state'] = [False] * data['Spells'][spell_level]['checkboxes']
+        data['Spells'][spell_level]['checkboxes_state'][checkbox_index] = checked
 
-if __name__ == "__main__":
-    app.run()
+    save_character_data(data)
+    return jsonify({"status": "success"})
+
+if __name__ == '__main__':
+    app.run(debug=True)
