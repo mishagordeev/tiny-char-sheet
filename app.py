@@ -91,16 +91,44 @@ def character_sheet():
 @app.route('/update_checkbox', methods=['POST'])
 def update_checkbox():
     try:
-        data = request.json  # Получить JSON-данные из запроса
-        if not data:
-            return jsonify({"error": "No data provided"}), 400
+        # Получаем данные из запроса
+        data = request.json  # Пример данных: {"path": "Spells.Level 1.spells[0].checked", "value": true}
+        if not data or "path" not in data or "value" not in data:
+            return jsonify({"error": "Invalid data format"}), 400
         
-        # Обновляем Firestore
+        # Получение пути и значения
+        path = data["path"]  # Путь к полю, например, "Spells.Level 1.spells[0].checked"
+        value = data["value"]  # Новое значение для чекбокса
+
+        # Получаем документ из Firestore
         doc_ref = db.collection("character_data").document("main")
-        doc_ref.update(data)
-        return jsonify({"status": "success"})
+        doc = doc_ref.get()
+
+        if not doc.exists:
+            return jsonify({"error": "Character data not found"}), 404
+
+        # Получаем текущие данные документа
+        character_data = doc.to_dict()
+
+        # Обновляем поле по указанному пути
+        keys = path.split(".")  # Разделяем путь
+        sub_data = character_data
+        for key in keys[:-1]:  # Проходим по всем, кроме последнего ключа
+            if key not in sub_data:
+                return jsonify({"error": f"Path not found: {path}"}), 400
+            sub_data = sub_data[key]
+        
+        # Устанавливаем значение чекбокса
+        final_key = keys[-1]
+        sub_data[final_key] = value
+
+        # Обновляем документ в Firestore
+        doc_ref.set(character_data)
+        
+        return jsonify({"status": "success", "updated_path": path, "new_value": value})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)

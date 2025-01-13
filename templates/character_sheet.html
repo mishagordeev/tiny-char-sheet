@@ -34,7 +34,7 @@
                     {% for i in range(details["checkboxes"]) %}
                         <input type="checkbox" id="{{ level }}-checkbox-{{ i }}" 
                                {% if details.get('checkboxes_state', [False] * details["checkboxes"])[i] %}checked{% endif %}
-                               onchange="updateCheckbox('{{ level }}', {{ i }}, this.checked)">
+                               onchange="updateCheckbox('{{ level }}', '{{ i }}', this.checked)">
                     {% endfor %}
                 </div>
                 <div>
