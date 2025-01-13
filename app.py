@@ -75,13 +75,23 @@ app = Flask(__name__)
 
 # Load JSON data from file
 def load_character_data():
-    with open('character_data.json', 'r') as file:
-        return json.load(file)
+    doc_ref = db.collection(COLLECTION_NAME).document('main')
+    doc = doc_ref.get()
+    if doc.exists:
+        character_data = doc.to_dict()
+        return jsonify(character_data)
+    else:
+        return jsonify({"error": "No character data found."}), 404
 
 # Save JSON data to file
 def save_character_data(data):
-    with open('character_data.json', 'w') as file:
-        json.dump(data, file, indent=4)
+    try:
+        character_data = request.json
+        doc_ref = db.collection(COLLECTION_NAME).document('main')
+        doc_ref.set(character_data)
+        return jsonify({"status": "success"})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/')
 def character_sheet():
@@ -97,19 +107,17 @@ def get_character_data():
 
 @app.route('/update_checkbox', methods=['POST'])
 def update_checkbox():
-    data = load_character_data()
-    spell_level = request.json.get('level')
-    checkbox_index = request.json.get('checkbox_index')
-    checked = request.json.get('checked')
-    
-    # Update the checkbox state in the data
-    if spell_level in data['Spells']:
-        if 'checkboxes_state' not in data['Spells'][spell_level]:
-            data['Spells'][spell_level]['checkboxes_state'] = [False] * data['Spells'][spell_level]['checkboxes']
-        data['Spells'][spell_level]['checkboxes_state'][checkbox_index] = checked
-
-    save_character_data(data)
-    return jsonify({"status": "success"})
+    try:
+        data = request.json  # Получить JSON-данные из запроса
+        if not data:
+            return jsonify({"error": "No data provided"}), 400
+        
+        # Обновляем Firestore
+        doc_ref = db.collection("character_data").document("main")
+        doc_ref.update(data)
+        return jsonify({"status": "success"})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
