@@ -77,9 +77,13 @@ app = Flask(__name__)
 def character_sheet():
     doc_ref = db.collection("character_data").document("main")
     doc = doc_ref.get()
+
     if doc.exists:
         character_data = doc.to_dict()
-        return jsonify(character_data)
+        character_data["Spells"] = dict(sorted(character_data["Spells"].items(), key=lambda x: int(x[0].split()[1])))
+        return render_template('character_sheet.html', data=character_data)
+
+        #return jsonify(character_data)
     else:
         return jsonify({"error": "No character data found."}), 404
 
