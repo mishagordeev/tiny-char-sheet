@@ -1,6 +1,5 @@
 import os
 import json
-import tempfile
 import firebase_admin
 from firebase_admin import credentials, firestore
 from flask import Flask, jsonify, request
