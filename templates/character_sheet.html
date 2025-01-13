@@ -40,7 +40,33 @@
                 <div>
                     {% for spell in details["spells"] %}
                         <div class="collapsible">{{ spell["name"] }}</div>
-                        <div class="content">Description: {{ spell["description"] }}</div>
+                        <div class="spell-card">
+                            <h1>{{ spell["name"]["hobby"] }}</h1>
+                            <h2>{{ spell["name"]["english"] }} / {{ spell["name"]["phantom"] }}</h2>
+                            
+                            <p><b>Школа магии:</b> {{ spell["school"] }}</p>
+                            <p><b>Уровень:</b> {{ spell["level"] }}</p>
+                            <p><b>Ритуал:</b> {{ "Да" if spell["ritual"] else "Нет" }}</p>
+                            <p><b>Концентрация:</b> {{ "Да" if spell["concentration"] else "Нет" }}</p>
+                    
+                            <p><b>Время сотворения:</b> {{ spell["cast_time"] }}</p>
+                            <p><b>Длительность:</b> {{ spell["duration"] }}</p>
+                            <p><b>Дистанция:</b> {{ spell["distance"] }}</p>
+                            <p><b>Компоненты:</b> {{ spell["components"] }}</p>
+                    
+                            <div class="content">
+                                <b>Описание:</b><br>
+                                {% for description in spell["description"] %}
+                                    {% if description["type"] == "html" %}
+                                        {{ description["html_string"]|safe }}
+                                    {% else %}
+                                        <p>{{ description["html_string"] }}</p>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                    
+                            <p><b>Доступно для:</b> {{ ", ".join(spell["available_for"]) }}</p>
+                        </div>
                     {% endfor %}
                 </div>
             </div>
