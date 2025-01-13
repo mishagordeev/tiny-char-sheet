@@ -15,7 +15,7 @@ logging.basicConfig(
 print("Starting application...")
 
 # Инициализация переменной db
-db = None
+# db = None
 
 # Получаем строку JSON из переменной окружения
 # json_key_str = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
