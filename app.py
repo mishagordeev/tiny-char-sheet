@@ -73,9 +73,9 @@ COLLECTION_NAME = "character_data"
 
 app = Flask(__name__)
 
-# Load JSON data from file
-def load_character_data():
-    doc_ref = db.collection(COLLECTION_NAME).document('main')
+@app.route('/')
+def character_sheet():
+    doc_ref = db.collection("character_data").document("main")
     doc = doc_ref.get()
     if doc.exists:
         character_data = doc.to_dict()
@@ -83,27 +83,6 @@ def load_character_data():
     else:
         return jsonify({"error": "No character data found."}), 404
 
-# Save JSON data to file
-def save_character_data(data):
-    try:
-        character_data = request.json
-        doc_ref = db.collection(COLLECTION_NAME).document('main')
-        doc_ref.set(character_data)
-        return jsonify({"status": "success"})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-@app.route('/')
-def character_sheet():
-    character_data = load_character_data()
-    character_data["Spells"] = dict(sorted(character_data["Spells"].items(), key=lambda x: int(x[0].split()[1])))
-    return render_template('character_sheet.html', data=character_data)
-
-@app.route('/data')
-def get_character_data():
-    character_data = load_character_data()
-    character_data["Spells"] = dict(sorted(character_data["Spells"].items(), key=lambda x: int(x[0].split()[1])))
-    return jsonify(character_data)
 
 @app.route('/update_checkbox', methods=['POST'])
 def update_checkbox():
