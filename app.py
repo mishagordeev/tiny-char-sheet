@@ -2,10 +2,9 @@ import os
 import json
 import tempfile
 import firebase_admin
-from firebase_admin import credentials
+from firebase_admin import credentials, firestore
 from flask import Flask, jsonify, request
 import logging
-from google.cloud import firestore
 
 # Настройка логирования
 logging.basicConfig(
@@ -20,7 +19,7 @@ print("Starting application...")
 db = None
 
 # Получаем строку JSON из переменной окружения
-json_key_str = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+json_key_str = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
 
 if json_key_str:
     try:
@@ -37,13 +36,13 @@ if json_key_str:
                 temp_file_path = temp_file.name
                 print(f"Temp file created at: {temp_file_path}")
                 # Инициализация Firebase Admin
-            cred = credentials.Certificate(temp_file_path)
+            cred = credentials.Certificate(json_data)
             firebase_admin.initialize_app(cred)
             logging.debug("Firebase initialized successfully.")
             print("Firebase initialized successfully.")
 
             # Инициализация Firestore клиента
-            db = firestore.Client.from_service_account_info(temp_file_path)
+            db = firestore.client()
             logging.debug("Firestore client initialized successfully.")
             print("Firestore client initialized successfully.")
 
