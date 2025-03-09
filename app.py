@@ -115,7 +115,7 @@ def update_checkbox():
         checkboxes = character_data["Spells"][level]["checkboxes_state"]
 
         # Проверяем, существует ли заклинание с таким индексом
-        index = data["index"]
+        index = int(data["index"])
         # if not (0 <= index < len(checkboxes)):
         #     return jsonify({"error": "Spell index out of range"}), 400
 
