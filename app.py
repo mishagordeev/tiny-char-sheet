@@ -112,15 +112,15 @@ def update_checkbox():
             return jsonify({"error": f"Spell level '{level}' not found"}), 404
 
         # Получаем список заклинаний
-        spell_list = character_data["Spells"][level]["spells"]
+        checkboxes = character_data["Spells"][level]["checkboxes_state"]
 
         # Проверяем, существует ли заклинание с таким индексом
         index = data["index"]
-        if not (0 <= index < len(spell_list)):
+        if not (0 <= index < len(checkboxes)):
             return jsonify({"error": "Spell index out of range"}), 400
 
         # Устанавливаем новое значение чекбокса
-        spell_list[index]["checked"] = data["checked"]
+        checkboxes[index]["checked"] = data["checked"]
 
         # Обновляем документ в Firestore
         doc_ref.set(character_data)
