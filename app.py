@@ -131,6 +131,22 @@ def update_checkbox():
         traceback.print_exc()  # Выведет полную ошибку в консоль
         return jsonify({"error": str(e)}), 500
 
+@app.route('/download_json', methods=['GET'])
+def download_json():
+    try:
+        # Получаем данные из Firestore
+        doc_ref = db.collection("character_data").document("main")
+        doc = doc_ref.get()
+
+        if not doc.exists:
+            return jsonify({"error": "Данных нет"}), 404
+
+        return jsonify(doc.to_dict())  # Отправляем JSON в ответе
+
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
