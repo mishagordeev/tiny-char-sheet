@@ -147,6 +147,25 @@ def download_json():
         import traceback
         traceback.print_exc()
         return jsonify({"error": str(e)}), 500
+    
+@app.route('/upload_json', methods=['POST'])
+def upload_json():
+    try:
+        data = request.json  # Получаем JSON-данные из запроса
+
+        if not data:
+            return jsonify({"error": "Нет данных"}), 400
+
+        # Сохраняем в Firestore
+        doc_ref = db.collection("character_data").document("main")
+        doc_ref.set(data)
+
+        return jsonify({"status": "success", "message": "Данные успешно записаны в базу"})
+    
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500    
 
 if __name__ == '__main__':
     app.run(debug=True)

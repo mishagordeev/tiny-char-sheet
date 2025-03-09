@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
+    <input type="file" id="fileInput">
+    <button onclick="uploadFile()">Загрузить в базу</button>
     <button onclick="downloadFile()">Сохранить из базы</button>
     <h1>{{ data["Name"] }} - Level {{ data["Level"] }} {{ data["Class"] }}</h1>
 
@@ -111,6 +113,46 @@
                     alert('Ошибка при скачивании данных.');
                 });
         }
+
+        function uploadFile() {
+            let fileInput = document.getElementById('fileInput');
+            if (!fileInput.files.length) {
+                alert('Выберите файл!');
+                return;
+            }
+
+            let file = fileInput.files[0];
+            let reader = new FileReader();
+
+            reader.onload = function(event) {
+                try {
+                    let jsonData = JSON.parse(event.target.result);
+
+                    fetch('/upload_json', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(jsonData),
+                    }).then(response => response.json()).then(data => {
+                        if (data.status === 'success') {
+                            alert('Файл успешно загружен в базу!');
+                        } else {
+                            alert('Ошибка: ' + data.error);
+                        }
+                    }).catch(error => {
+                        console.error('Ошибка:', error);
+                        alert('Произошла ошибка при загрузке.');
+                    });
+
+                } catch (error) {
+                    alert('Ошибка чтения файла. Убедитесь, что это корректный JSON.');
+                }
+            };
+
+            reader.readAsText(file);
+        }
+
 
 
         const collapsibles = document.querySelectorAll('.collapsible');
