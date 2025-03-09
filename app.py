@@ -93,12 +93,8 @@ def update_checkbox():
     try:
         # Получаем данные из запроса
         data = request.json  # Пример данных: {"path": "Spells.Level 1.spells[0].checked", "value": true}
-        if not data or "path" not in data or "value" not in data:
+        if not data or "level" not in data or "index" not in data or "checked" not in data:
             return jsonify({"error": "Invalid data format"}), 400
-        
-        # Получение пути и значения
-        path = data["path"]  # Путь к полю, например, "Spells.Level 1.spells[0].checked"
-        value = data["value"]  # Новое значение для чекбокса
 
         # Получаем документ из Firestore
         doc_ref = db.collection("character_data").document("main")
@@ -110,22 +106,26 @@ def update_checkbox():
         # Получаем текущие данные документа
         character_data = doc.to_dict()
 
-        # Обновляем поле по указанному пути
-        keys = path.split(".")  # Разделяем путь
-        sub_data = character_data
-        for key in keys[:-1]:  # Проходим по всем, кроме последнего ключа
-            if key not in sub_data:
-                return jsonify({"error": f"Path not found: {path}"}), 400
-            sub_data = sub_data[key]
-        
-        # Устанавливаем значение чекбокса
-        final_key = keys[-1]
-        sub_data[final_key] = value
+                # Проверяем, существует ли нужный уровень заклинаний
+        level = data["level"]
+        if level not in character_data["Spells"]:
+            return jsonify({"error": f"Spell level '{level}' not found"}), 404
+
+        # Получаем список заклинаний
+        spell_list = character_data["Spells"][level]["spells"]
+
+        # Проверяем, существует ли заклинание с таким индексом
+        index = data["index"]
+        if not (0 <= index < len(spell_list)):
+            return jsonify({"error": "Spell index out of range"}), 400
+
+        # Устанавливаем новое значение чекбокса
+        spell_list[index]["checked"] = data["checked"]
 
         # Обновляем документ в Firestore
         doc_ref.set(character_data)
         
-        return jsonify({"status": "success", "updated_path": path, "new_value": value})
+        return jsonify({"status": "success", "updated": data})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
