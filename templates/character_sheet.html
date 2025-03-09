@@ -40,7 +40,7 @@
                 </div>
                 <div>
                     {% for spell in details["spells"] %}
-                        <div class="collapsible">{{ spell["name"] }}</div>
+                        <div class="collapsible">{{ spell["name"]["hobby"] }}</div>
                         <div class="spell-card">
                             <h1>{{ spell["name"]["hobby"] }}</h1>
                             <h2>{{ spell["name"]["english"] }} / {{ spell["name"]["phantom"] }}</h2>
