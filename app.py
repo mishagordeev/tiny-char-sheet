@@ -127,6 +127,8 @@ def update_checkbox():
         
         return jsonify({"status": "success", "updated": data})
     except Exception as e:
+        import traceback
+        traceback.print_exc()  # Выведет полную ошибку в консоль
         return jsonify({"error": str(e)}), 500
 
 
