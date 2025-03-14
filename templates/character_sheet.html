@@ -20,6 +20,15 @@
         {% endfor %}
     </div>
 
+    <div>
+        <div class="collapsible"><h2>Навыки</h2></div>
+        <div class="content">
+            {% for key, value in data["Skills"].items() %}
+                <p>{{ key }}: {{ value }}</p>
+            {% endfor %}
+        </div>
+    </div>
+
     <h2>Equipment</h2>
     <div>
         {% for item in data["Equipment"] %}
