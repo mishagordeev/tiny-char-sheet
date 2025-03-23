@@ -113,15 +113,15 @@
     </div>
     <div id="stats" class="content" style="display: none;">
         <h2>Характеристики</h2>
-        {% for key, value in data["Attributes"] %}
+        {% for key, value in data["Attributes"].items() %}
         <p><strong>{{ key }}:</strong> {{ value }}</p>
         {% endfor %}
         <h2>Испытания</h2>
-        {% for key, value in data["Saves"] %}
+        {% for key, value in data["Saves"].items() %}
         <p><strong>{{ key }}:</strong> {{ value }}</p>
         {% endfor %}
         <h2>Навыки</h2>
-        {% for key, value in data["Skills"] %}
+        {% for key, value in data["Skills"].items() %}
         <p><strong>{{ key }}:</strong> {{ value }}</p>
         {% endfor %}
     </div>
