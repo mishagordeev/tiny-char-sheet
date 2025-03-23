@@ -125,7 +125,7 @@
                 {{ i }}-й круг    
                 <div class="checkbox-group" onclick="((event) => updateCheckboxes(event, '{{ i }}'))(event)">
                     {% for j in range(data.Spells.slots[i]["available"]) %}
-                    <input type="checkbox" {% if j < data.Spells.slots[i]["used"] %}checked{% endif %}
+                    <input type="checkbox" {% if j < data.Spells.slots[i]["used"] %}checked{% endif %}>
                     {% endfor %}     
                 </div>
             </div>
