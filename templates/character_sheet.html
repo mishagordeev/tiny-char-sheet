@@ -19,7 +19,8 @@
     function toggleCollapsible(element) {
         console.log("click function")
         let content = element.nextElementSibling;
-        console.log(content)
+        console.log(content.style.display)
+
         if (content.style.display === "block")  content.style.display = "none"; else content.style.display = "block"
     }
 
@@ -67,7 +68,6 @@
         showTab("spells");
 
         document.querySelectorAll(".collapsible").forEach(item => {
-            console.log("query")
             item.addEventListener("click", function() {
                 toggleCollapsible(this);
             });
@@ -111,10 +111,10 @@
                         <div class="collapsible">{{ spell["name"]["russian"] }}</div>
                         <div class="collapsible-content">
                             <p><i>{{ spell["school"] }}</i></p>
-                            <p>Время накладывания: {{ spell["cast_time"] }}</p>
-                            <p>Дистанция: {{ spell["distance"] }}</p>
-                            <p>Компоненты: {{ spell["components"] }}</p>
-                            <p>Длительность: {{ spell["duration"] }}</p>
+                            <p><strong>Время накладывания:</strong> {{ spell["cast_time"] }}</p>
+                            <p><strong>Дистанция:</strong> {{ spell["distance"] }}</p>
+                            <p><strong>Компоненты:</strong> {{ spell["components"] }}</p>
+                            <p><strong>Длительность:</strong> {{ spell["duration"] }}</p>
                             <p>{{ spell["description"] }}</p>
                         </div>
                     {% endif %}
