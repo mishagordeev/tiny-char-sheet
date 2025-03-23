@@ -106,7 +106,7 @@ def update_checkbox():
         character_data = doc.to_dict()
 
         # Проверяем, существует ли нужный уровень заклинаний
-        level = data["level"]
+        level = int(data["level"])
         # if slots not in character_data["Spells"]:
         #     return jsonify({"error": f"Spell level '{level}' not found"}), 404
 
