@@ -84,7 +84,7 @@
     }
 
 
-    const inputField = document.getElementById("myInput");
+    
 
     // Функция для отправки данных на сервер
     function sendDataToServer(value) {
@@ -115,19 +115,8 @@
     }
 
     // Дебаунсинг
-    let timeoutId;
-    inputField.addEventListener("input", function() {
-        // Очищаем предыдущий таймер
-        clearTimeout(timeoutId);
-
-        // Устанавливаем новый таймер
-        timeoutId = setTimeout(() => {
-            const inputValue = inputField.value;
-            if (inputValue.trim() !== "") {  // Проверка, что поле не пустое
-                sendDataToServer(inputValue);
-            }
-        }, 300);  // Задержка 300 мс
-    });
+    
+    
 
     document.addEventListener("DOMContentLoaded", function() {
         showTab("spells");
@@ -144,7 +133,21 @@
         //     checkbox.addEventListener("click", updateCheckboxes);
         // });
 
+        const inputField = document.getElementById("myInput");
+        let timeoutId;
 
+        inputField.addEventListener("input", function() {
+        // Очищаем предыдущий таймер
+        clearTimeout(timeoutId);
+
+        // Устанавливаем новый таймер
+        timeoutId = setTimeout(() => {
+            const inputValue = inputField.value;
+            if (inputValue.trim() !== "") {  // Проверка, что поле не пустое
+                sendDataToServer(inputValue);
+            }
+        }, 300);  // Задержка 300 мс
+        });
     });
 </script>
 
