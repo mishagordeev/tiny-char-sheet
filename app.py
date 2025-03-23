@@ -123,7 +123,9 @@ def update_checkbox():
         # Устанавливаем новое значение чекбокса
         used = data["used"]
         logging.info(used)
-
+        logging.info(character_data["Spells"]["slots"][level]["used"])
+        character_data["Spells"]["slots"][level]["used"] = used
+        logging.info(character_data["Spells"]["slots"][level]["used"])
         # Обновляем документ в Firestore
         doc_ref.set(character_data)
         
