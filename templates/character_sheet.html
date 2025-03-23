@@ -177,7 +177,14 @@
         {% endfor %}
     </div>
     <div id="feats" class="content" style="display: none;">🦶 Особенности</div>
-    <div id="items" class="content" style="display: none;">👜 Предметы</div>
+    <div id="items" class="content" style="display: none;">
+        {% for item in data.Equipment %}
+            <div class="collapsible">{{ item["item"] }}</div>
+            <div class="collapsible-content">
+                <p> {{ item["description"] }}</p>
+            </div>
+        {% endfor %}
+    </div>
     <div id="spells" class="content">
         {% for i in range(data.Spells.slots|length) %}
             <div class="panel">
