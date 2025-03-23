@@ -19,12 +19,7 @@
     function toggleCollapsible(event) {
         let content = event.currentTarget.nextElementSibling;
         let currentDisplay = window.getComputedStyle(content).display;
-
-        if (currentDisplay === "block") {
-            currentDisplay = "none";
-        } else {
-            currentDisplay = "block";
-        }
+        content.style.display = content.style.display === "block" ? "none" : "block";
     }
 
     function togglePanel(event) {
@@ -35,7 +30,7 @@
         content.style.display = content.style.display === "block" ? "none" : "block";
     }
 
-    function updateCheckboxex(event, level) {
+    function updateCheckboxes(event, level) {
         event.stopPropagation(); 
         
         let checkboxes = Array.from(event.currentTarget.parentElement.querySelectorAll("input"));
