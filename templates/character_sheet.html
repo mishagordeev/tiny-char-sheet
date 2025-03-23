@@ -156,7 +156,7 @@
     <button onclick="uploadFile()">Загрузить в базу</button>
     <button onclick="downloadFile()">Сохранить из базы</button>
     <div id="common" class="content" style="display: none;">
-        <input type="text" id="myInput" placeholder="Введите текст">
+        <input type="text" id="myInput" value={{data["Hit Points"]["Current"]}}>
         <span><strong>Класс брони: </strong>{{data["Armor Class"]}}</span>
         <span><strong>Скорость: </strong>{{data["Speed"]}}</span>
         <span><strong>Бонус мастерства: </strong>{{data["Bonus"]}}</span>
