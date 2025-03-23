@@ -107,6 +107,7 @@ def update_checkbox():
 
         # Проверяем, существует ли нужный уровень заклинаний
         level = int(data["level"])
+        import traceback
         traceback.print_exc(level)
         # if slots not in character_data["Spells"]:
         #     return jsonify({"error": f"Spell level '{level}' not found"}), 404
