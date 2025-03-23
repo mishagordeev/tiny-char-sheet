@@ -80,7 +80,6 @@ def character_sheet():
 
     if doc.exists:
         character_data = doc.to_dict()
-        character_data["Spells"] = dict(sorted(character_data["Spells"].items(), key=lambda x: int(x[0].split()[1])))
         return render_template('character_sheet.html', data=character_data)
 
         #return jsonify(character_data)
