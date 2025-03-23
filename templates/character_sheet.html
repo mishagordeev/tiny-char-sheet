@@ -16,9 +16,9 @@
         document.querySelector(`[data-tab='${tabName}']`).classList.add("active");
     }
 
-    function toggleCollapsible(element) {
+    function toggleCollapsible(event) {
         console.log("click function")
-        let content = element.nextElementSibling;
+        let content = event.currentTarget.nextElementSibling;
         console.log(content)
         console.log(content.style.display)
 
@@ -73,9 +73,7 @@
         showTab("spells");
 
         document.querySelectorAll(".collapsible").forEach(item => {
-            item.addEventListener("click", function() {
-                toggleCollapsible(this);
-            });
+            item.addEventListener("click", toggleCollapsible);
         });
 
         document.querySelectorAll(".panel").forEach(item => {
