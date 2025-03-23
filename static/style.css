@@ -37,6 +37,7 @@ body {
     cursor: pointer;
     color: gray;
     transition: 0.3s;
+    margin-bottom: 100px;
 }
 
 .tab.active {
