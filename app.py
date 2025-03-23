@@ -103,7 +103,7 @@ def update_field():
         
         character_data = doc.to_dict()
 
-        hp = data
+        hp = data["inputValue"]
         character_data["Hit Points"]["Current"] = hp
         
         doc_ref.set(character_data)
