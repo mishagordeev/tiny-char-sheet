@@ -17,7 +17,9 @@
     }
 
     function toggleCollapsible(element) {
+        console.log("click function")
         let content = element.nextElementSibling;
+        console.log(content)
         content.style.display = content.style.display === "block" ? "none" : "block";
     }
 
@@ -65,6 +67,7 @@
         showTab("spells");
 
         document.querySelectorAll(".collapsible").forEach(item => {
+            console.log("query")
             item.addEventListener("click", function() {
                 toggleCollapsible(this);
             });
