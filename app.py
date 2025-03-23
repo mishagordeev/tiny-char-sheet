@@ -92,7 +92,7 @@ def update_checkbox():
     try:
         # Получаем данные из запроса
         data = request.json  # Пример данных: {"path": "Spells.Level 1.spells[0].checked", "value": true}
-        if not data or "level" not in data or "index" not in data or "checked" not in data:
+        if not data or "level" not in data or "used" not in data:
             return jsonify({"error": "Invalid data format"}), 400
 
         # Получаем документ из Firestore
@@ -107,19 +107,19 @@ def update_checkbox():
 
         # Проверяем, существует ли нужный уровень заклинаний
         level = data["level"]
-        if level not in character_data["Spells"]:
-            return jsonify({"error": f"Spell level '{level}' not found"}), 404
+        # if slots not in character_data["Spells"]:
+        #     return jsonify({"error": f"Spell level '{level}' not found"}), 404
 
         # Получаем список заклинаний
-        checkboxes = character_data["Spells"][level]["checkboxes_state"]
+        used = character_data["Spells"]["slots"][level]["used"]
 
         # Проверяем, существует ли заклинание с таким индексом
-        index = int(data["index"])
+        # index = int(data["index"])
         # if not (0 <= index < len(checkboxes)):
         #     return jsonify({"error": "Spell index out of range"}), 400
 
         # Устанавливаем новое значение чекбокса
-        checkboxes[index] = data["checked"]
+        used = data["used"]
 
         # Обновляем документ в Firestore
         doc_ref.set(character_data)

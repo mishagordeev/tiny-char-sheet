@@ -17,16 +17,10 @@
     }
 
     function toggleCollapsible(event) {
-        console.log("click function")
         let content = event.currentTarget.nextElementSibling;
-        console.log(content)
-        console.log(content.style.display)
-
         let currentDisplay = window.getComputedStyle(content).display;
-        console.log(currentDisplay);
 
         if (currentDisplay === "block") {
-            console.log("in");
             currentDisplay = "none";
         } else {
             currentDisplay = "block";
@@ -41,8 +35,8 @@
         content.style.display = content.style.display === "block" ? "none" : "block";
     }
 
-    function updateCheckboxes(event) {
-        event.stopPropagation(); // 
+    function updateCheckboxex(event, level) {
+        event.stopPropagation(); 
         
         let checkboxes = Array.from(event.currentTarget.parentElement.querySelectorAll("input"));
 
@@ -71,6 +65,29 @@
             }
 
         }
+
+        let checkedCount = 0;
+
+        checkboxes.forEach(function(checkbox) {
+            if (checkbox.checked) {
+                checkedCount++;
+            }
+        });
+
+        fetch('/update_checkbox', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                level: level,
+                used: checkedCount,
+            }),
+        }).then(response => response.json()).then(data => {
+            if (data.status !== 'success') {
+                console.error('Failed to update checkbox state');
+            }
+        });
     }
 
     document.addEventListener("DOMContentLoaded", function() {
@@ -84,9 +101,9 @@
             item.addEventListener("click", togglePanel);
         });
 
-        document.querySelectorAll(".checkbox-group input").forEach(checkbox => {
-            checkbox.addEventListener("click", updateCheckboxes);
-        });
+        // document.querySelectorAll(".checkbox-group input").forEach(checkbox => {
+        //     checkbox.addEventListener("click", updateCheckboxes);
+        // });
     });
 </script>
 
@@ -106,9 +123,9 @@
         {% for i in range(data.Spells.slots|length) %}
             <div class="panel">
                 {{ i }}-й круг    
-                <div class="checkbox-group">
+                <div class="checkbox-group" onclick="((event) => updateCheckboxes(event, '{{ i }}'))(event)">
                     {% for j in range(data.Spells.slots[i]["available"]) %}
-                        <input type="checkbox">
+                    <input type="checkbox" {% if j < data.Spells.slots[i]["used"] %}checked{% endif %}
                     {% endfor %}     
                 </div>
             </div>
@@ -154,24 +171,24 @@
 
     <script>
 
-        function updateCheckbox(level, index, checked) {
-            console.log(`level ${level} index ${index} checked ${checked}`)
-            fetch('/update_checkbox', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    level: level,
-                    index: index,
-                    checked: checked
-                }),
-            }).then(response => response.json()).then(data => {
-                if (data.status !== 'success') {
-                    console.error('Failed to update checkbox state');
-                }
-            });
-        }
+        // function updateCheckbox(level, index, checked) {
+        //     console.log(`level ${level} index ${index} checked ${checked}`)
+        //     fetch('/update_checkbox', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify({
+        //             level: level,
+        //             index: index,
+        //             checked: checked
+        //         }),
+        //     }).then(response => response.json()).then(data => {
+        //         if (data.status !== 'success') {
+        //             console.error('Failed to update checkbox state');
+        //         }
+        //     });
+        // }
 
         function downloadFile() {
             fetch('/download_json')
@@ -229,15 +246,6 @@
             reader.readAsText(file);
         }
 
-
-
-        const collapsibles = document.querySelectorAll('.collapsible');
-        collapsibles.forEach(button => {
-            button.addEventListener('click', () => {
-                const content = button.nextElementSibling;
-                content.style.display = content.style.display === 'block' ? 'none' : 'block';
-            });
-        });
     </script>
 
 </body>
