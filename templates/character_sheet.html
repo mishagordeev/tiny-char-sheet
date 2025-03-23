@@ -21,7 +21,11 @@
         let content = element.nextElementSibling;
         console.log(content.style.display)
 
-        if (content.style.display === "block")  content.style.display = "none"; else content.style.display = "block"
+        if (content.style.display === "block")  {
+            console.log("in")
+            content.style.display = "none"
+        }
+        else content.style.display = "block"
     }
 
     function togglePanel(event) {
