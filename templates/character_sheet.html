@@ -104,12 +104,27 @@
     <input type="file" id="fileInput">
     <button onclick="uploadFile()">Загрузить в базу</button>
     <button onclick="downloadFile()">Сохранить из базы</button>
-    <h1>{{ data["Name"] }} - Level {{ data["Level"] }} {{ data["Class"] }}</h1>
-    <h1>{{ data["Spells"]["slots"][0]["used"]}}</h1>
-    <h1>{{ data["Spells"]["slots"][1]["used"]}}</h1>
-
-    <div id="common" class="content" style="display: none;">🏠 Общее</div>
-    <div id="stats" class="content" style="display: none;">🔍 Числа</div>
+    <div id="common" class="content" style="display: none;">
+        <p><strong>Класс брони: </strong>{{data["Armor Class"]}}</p>
+        <p><strong>Скорость: </strong>{{data["Speed"]}}</p>
+        <p><strong>Бонус мастерства: </strong>{{data["Bonus"]}}</p>
+        <p><strong>Инициатива: </strong>{{data["Initiative"]}}</p>
+        },
+    </div>
+    <div id="stats" class="content" style="display: none;">
+        <h2>Характеристики</h2>
+        {% for key, value in data["Attributes"] %}
+        <p><strong>{{ key }}:</strong> {{ value }}</p>
+        {% endfor %}
+        <h2>Испытания</h2>
+        {% for key, value in data["Saves"] %}
+        <p><strong>{{ key }}:</strong> {{ value }}</p>
+        {% endfor %}
+        <h2>Навыки</h2>
+        {% for key, value in data["Skills"] %}
+        <p><strong>{{ key }}:</strong> {{ value }}</p>
+        {% endfor %}
+    </div>
     <div id="feats" class="content" style="display: none;">🦶 Особенности</div>
     <div id="items" class="content" style="display: none;">👜 Предметы</div>
     <div id="spells" class="content">
