@@ -79,7 +79,7 @@
         }).then(response => response.json()).then(data => {
             if (data.status !== 'success') {
                 console.error('Failed to update checkbox state');
-            }
+            } else {console.log(data.used + " " + data.level)}
         });
     }
 
