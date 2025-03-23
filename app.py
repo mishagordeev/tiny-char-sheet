@@ -107,11 +107,13 @@ def update_checkbox():
 
         # Проверяем, существует ли нужный уровень заклинаний
         level = int(data["level"])
+        traceback.print_exc(level)
         # if slots not in character_data["Spells"]:
         #     return jsonify({"error": f"Spell level '{level}' not found"}), 404
 
         # Получаем список заклинаний
         used = character_data["Spells"]["slots"][level]["used"]
+        traceback.print_exc(used)
 
         # Проверяем, существует ли заклинание с таким индексом
         # index = int(data["index"])
