@@ -186,6 +186,9 @@
         {% endfor %}
     </div>
     <div id="spells" class="content">
+        <span><strong>Заклинательная характеристика: </strong>{{data["Spells"]["Ability"]}}</span>
+        <span><strong>Сложность испытаний: </strong>{{data["Spells"]["Save"]}}</span>
+        <span><strong>Бонус атаки заклинаниями: </strong>{{data["Spells"]["Attack"]}}</span>
         {% for i in range(data.Spells.slots|length) %}
             <div class="panel">
                 {{ i }}-й круг    
