@@ -1,32 +1,116 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 20px;
-}
-
-h1, h2, h3 {
-    color: #333;
-}
-
-.collapsible {
-    cursor: pointer;
-    padding: 10px;
-    border: 1px solid #ccc;
-    margin: 5px 0;
-    background-color: #f1f1f1;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: space-between;
+    background: #f4f4f4;
 }
 
 .content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+    padding: 20px;
+    text-align: left;
+}
+
+.tab-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: white;
+    border-top: 1px solid #ccc;
+    padding: 10px 0;
+}
+
+.tab {
+    flex: 1;
+    text-align: center;
     padding: 10px;
-    display: none;
+    cursor: pointer;
+    color: gray;
+    transition: 0.3s;
+}
+
+.tab.active {
+    color: black;
+    font-weight: bold;
+}
+
+.tab i {
+    display: block;
+    font-size: 24px;
+}
+
+/* Стили для списка с раскрывающимися элементами */
+.collapsible {
+    width: 100%;
+    max-width: 400px;
+    background: white;
     border: 1px solid #ccc;
-    margin-top: -1px;
-    background-color: #fafafa;
+    border-radius: 5px;
+    margin: 5px 0;
+    padding: 10px;
+    cursor: pointer;
+    text-align: left;
+    font-weight: bold;
 }
 
-.spell-level h3 {
-    margin-bottom: 5px;
+.collapsible-content {
+    display: none;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    background: #f9f9f9;
 }
 
-.checkboxes {
-    margin-bottom: 10px;
+/* Стили для красной плашки */
+.panel {
+    width: 100%;
+    max-width: 400px;
+    background: #e74c3c;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.checkbox-group {
+    display: flex;
+    gap: 5px;
+}
+
+.checkbox-group input {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    appearance: none;
+    border: 2px solid white;
+    border-radius: 4px;
+    background: transparent;
+    display: inline-block;
+    position: relative;
+}
+
+.checkbox-group input:checked {
+    background: white;
+}
+
+.panel-content {
+    display: none;
+    width: 100%;
+    max-width: 400px;
+    margin-top: 5px;
 }
