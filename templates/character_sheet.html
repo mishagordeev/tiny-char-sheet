@@ -7,6 +7,12 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
+    <input type="file" id="fileInput">
+    <button onclick="uploadFile()">Загрузить в базу</button>
+    <button onclick="downloadFile()">Сохранить из базы</button>
+    <h1>{{ data["Name"] }} - Level {{ data["Level"] }} {{ data["Class"] }}</h1>
+    <h1>{{ data["Spells"]["slots"][0]["used"]}}</h1>
+
     <div id="common" class="content" style="display: none;">🏠 Общее</div>
     <div id="stats" class="content" style="display: none;">🔍 Числа</div>
     <div id="feats" class="content" style="display: none;">🦶 Особенности</div>
@@ -67,12 +73,9 @@
 
 
 
-    <input type="file" id="fileInput">
-    <button onclick="uploadFile()">Загрузить в базу</button>
-    <button onclick="downloadFile()">Сохранить из базы</button>
-    <!-- <h1>{{ data["Name"] }} - Level {{ data["Level"] }} {{ data["Class"] }}</h1>
 
-    <h2>Attributes</h2>
+
+    <!-- <h2>Attributes</h2>
     <div>
         {% for key, value in data["Attributes"].items() %}
             <div class="collapsible">{{ key }}</div>
