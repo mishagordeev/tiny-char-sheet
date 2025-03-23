@@ -13,6 +13,9 @@
     <h1>{{ data["Name"] }} - Level {{ data["Level"] }} {{ data["Class"] }}</h1>
     <h1>{{ data["Spells"]["slots"][0]["used"]}}</h1>
     <h1>{{ data["Spells"]["slots"][1]["used"]}}</h1>
+    {% for i in range(data["Spells"]["slots"]|length) %}
+        <p>Item {{ i }}: {{ ["Spells"]["slots"][i]["available"] }}</p>
+    {% endfor %}
 
     <div id="common" class="content" style="display: none;">🏠 Общее</div>
     <div id="stats" class="content" style="display: none;">🔍 Числа</div>
