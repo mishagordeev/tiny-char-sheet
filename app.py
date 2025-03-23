@@ -87,6 +87,33 @@ def character_sheet():
         return jsonify({"error": "No character data found."}), 404
 
 
+@app.route('/update_field', methods=['POST'])
+def update_field():
+    try:
+        # Получаем данные из запроса
+        data = request.json  # Пример данных: {"path": "Spells.Level 1.spells[0].checked", "value": true}
+        if not data:
+            return jsonify({"error": "Invalid data format"}), 400    
+        
+        doc_ref = db.collection("character_data").document("main")
+        doc = doc_ref.get()
+
+        if not doc.exists:
+            return jsonify({"error": "Character data not found"}), 404
+        
+        character_data = doc.to_dict()
+
+        hp = data
+        character_data["Hit Points"]["Current"] = hp
+        
+        doc_ref.set(character_data)
+        
+        return jsonify({"status": "success", "updated": data})
+    except Exception as e:
+        import traceback
+        traceback.print_exc()  # Выведет полную ошибку в консоль
+        return jsonify({"error": str(e)}), 500
+
 @app.route('/update_checkbox', methods=['POST'])
 def update_checkbox():
     try:

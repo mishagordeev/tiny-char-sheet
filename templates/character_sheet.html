@@ -83,6 +83,52 @@
         });
     }
 
+
+    const inputField = document.getElementById("myInput");
+
+    // Функция для отправки данных на сервер
+    function sendDataToServer(value) {
+        // URL сервера
+
+        // Данные для отправки
+        const data = {
+            inputValue: value
+        };
+
+        // Отправка данных на сервер
+        fetch('/update_field', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            // Обновляем статус
+            console.log("Ответ сервера:", result);
+        })
+        .catch(error => {
+            // Обработка ошибок
+            console.error("Ошибка:", error);
+        });
+    }
+
+    // Дебаунсинг
+    let timeoutId;
+    inputField.addEventListener("input", function() {
+        // Очищаем предыдущий таймер
+        clearTimeout(timeoutId);
+
+        // Устанавливаем новый таймер
+        timeoutId = setTimeout(() => {
+            const inputValue = inputField.value;
+            if (inputValue.trim() !== "") {  // Проверка, что поле не пустое
+                sendDataToServer(inputValue);
+            }
+        }, 300);  // Задержка 300 мс
+    });
+
     document.addEventListener("DOMContentLoaded", function() {
         showTab("spells");
 
@@ -97,6 +143,8 @@
         // document.querySelectorAll(".checkbox-group input").forEach(checkbox => {
         //     checkbox.addEventListener("click", updateCheckboxes);
         // });
+
+
     });
 </script>
 
@@ -105,24 +153,24 @@
     <button onclick="uploadFile()">Загрузить в базу</button>
     <button onclick="downloadFile()">Сохранить из базы</button>
     <div id="common" class="content" style="display: none;">
-        <p><strong>Класс брони: </strong>{{data["Armor Class"]}}</p>
-        <p><strong>Скорость: </strong>{{data["Speed"]}}</p>
-        <p><strong>Бонус мастерства: </strong>{{data["Bonus"]}}</p>
-        <p><strong>Инициатива: </strong>{{data["Initiative"]}}</p>
-        },
+        <input type="text" id="myInput" placeholder="Введите текст" onchange="updateHp">
+        <span><strong>Класс брони: </strong>{{data["Armor Class"]}}</span>
+        <span><strong>Скорость: </strong>{{data["Speed"]}}</span>
+        <span><strong>Бонус мастерства: </strong>{{data["Bonus"]}}</span>
+        <span><strong>Инициатива: </strong>{{data["Initiative"]}}</span>
     </div>
     <div id="stats" class="content" style="display: none;">
         <h2>Характеристики</h2>
         {% for key, value in data["Attributes"].items() %}
-        <p><strong>{{ key }}:</strong> {{ value }}</p>
+        <span><strong>{{ key }}:</strong> {{ value }}</span>
         {% endfor %}
         <h2>Испытания</h2>
         {% for key, value in data["Saves"].items() %}
-        <p><strong>{{ key }}:</strong> {{ value }}</p>
+        <span><strong>{{ key }}:</strong> {{ value }}</span>
         {% endfor %}
         <h2>Навыки</h2>
         {% for key, value in data["Skills"].items() %}
-        <p><strong>{{ key }}:</strong> {{ value }}</p>
+        <span><strong>{{ key }}:</strong> {{ value }}</span>
         {% endfor %}
     </div>
     <div id="feats" class="content" style="display: none;">🦶 Особенности</div>
