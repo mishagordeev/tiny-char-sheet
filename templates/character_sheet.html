@@ -29,9 +29,9 @@
                 </div>
             </div>
             <div class="panel-content">
-                {% for key, value in data.Spells.list %}
-                    {% if "level" in value and value["level"] == i %}
-                        <div class="collapsible">data.Spells.list.name.phantom</div>
+                {% for spell in data.Spells.list %}
+                    {% if "level" in spell and spell["level"] == i %}
+                        <div class="collapsible">data.Spells.list.spell.name.phantom</div>
                         <div class="collapsible-content">Это содержимое элемента 1.</div>
                     {% endif %}
                 {% endfor %}
