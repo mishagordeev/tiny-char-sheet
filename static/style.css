@@ -17,7 +17,8 @@ body {
     /* justify-content: center; */
     padding: 20px;
     text-align: left;
-    margin-bottom: 200px;
+    overflow-y: auto; /* Прокрутка, если контента много */
+    padding-bottom: 150px; /* Добавляем отступ снизу для панели */
 }
 
 .tab-bar {
@@ -37,7 +38,6 @@ body {
     cursor: pointer;
     color: gray;
     transition: 0.3s;
-    margin-bottom: 100px;
 }
 
 .tab.active {
