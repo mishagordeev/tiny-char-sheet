@@ -110,8 +110,12 @@
                     {% if "level" in spell and spell["level"] == i %}
                         <div class="collapsible">{{ spell["name"]["russian"] }}</div>
                         <div class="collapsible-content">
-                            <p></p>
-                            {{ spell["description"] }}
+                            <p><i>{{ spell["school"] }}</i></p>
+                            <p>Время накладывания: {{ spell["cast_time"] }}</p>
+                            <p>Дистанция: {{ spell["distance"] }}</p>
+                            <p>Компоненты: {{ spell["components"] }}</p>
+                            <p>Длительность: {{ spell["duration"] }}</p>
+                            <p>{{ spell["description"] }}</p>
                         </div>
                     {% endif %}
                 {% endfor %}
