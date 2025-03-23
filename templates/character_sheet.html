@@ -20,7 +20,7 @@
         console.log("click function")
         let content = element.nextElementSibling;
         console.log(content)
-        content.style.display = "block";
+        if (content.style.display === "block")  content.style.display === "none"; else content.style.display = "block"
     }
 
     function togglePanel(event) {
