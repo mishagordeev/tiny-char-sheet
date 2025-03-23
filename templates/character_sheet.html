@@ -6,6 +6,80 @@
     <title>D&D Character Sheet</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
+
+<script>
+    function showTab(tabName) {
+        document.querySelectorAll(".content").forEach(c => c.style.display = "none");
+        document.getElementById(tabName).style.display = "flex";
+
+        document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+        document.querySelector(`[data-tab='${tabName}']`).classList.add("active");
+    }
+
+    function toggleCollapsible(element) {
+        let content = element.nextElementSibling;
+        content.style.display = content.style.display === "block" ? "none" : "block";
+    }
+
+    function togglePanel(event) {
+        // Исключаем срабатывание при клике на чекбоксы
+        if (event.target.type === "checkbox") return;
+        
+        let content = event.currentTarget.nextElementSibling;
+        content.style.display = content.style.display === "block" ? "none" : "block";
+    }
+
+    function updateCheckboxes(event) {
+        event.stopPropagation(); // 
+        
+        let checkboxes = Array.from(event.currentTarget.parentElement.querySelectorAll("input"));
+
+        if (event.target.checked) {
+            event.target.checked = false;
+
+
+            for (let i = 0; i < checkboxes.length; i++) {
+                console.log(i)
+                if (!checkboxes[i].checked) {
+                    console.log(checkboxes[i].checked)
+                    checkboxes[i].checked = true;
+                    break;
+                }
+            }
+
+        } else { 
+            event.target.checked = true;
+
+
+            for (let i = checkboxes.length - 1; i >= 0; i--) {
+                if (checkboxes[i].checked) {
+                    checkboxes[i].checked = false;
+                    break;
+                }
+            }
+
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        showTab("spells");
+
+        document.querySelectorAll(".collapsible").forEach(item => {
+            item.addEventListener("click", function() {
+                toggleCollapsible(this);
+            });
+        });
+
+        document.querySelectorAll(".panel").forEach(item => {
+            item.addEventListener("click", togglePanel);
+        });
+
+        document.querySelectorAll(".checkbox-group input").forEach(checkbox => {
+            checkbox.addEventListener("click", updateCheckboxes);
+        });
+    });
+</script>
+
 <body>
     <input type="file" id="fileInput">
     <button onclick="uploadFile()">Загрузить в базу</button>
@@ -31,8 +105,11 @@
             <div class="panel-content">
                 {% for spell in data.Spells.list %}
                     {% if "level" in spell and spell["level"] == i %}
-                        <div class="collapsible">{{ spell["name"]["phantom"] }}</div>
-                        <div class="collapsible-content">{{ spell["description"] }}</div>
+                        <div class="collapsible">{{ spell["name"]["russian"] }}</div>
+                        <div class="collapsible-content">
+                            <p></p>
+                            {{ spell["description"] }}
+                        </div>
                     {% endif %}
                 {% endfor %}
             </div>
@@ -145,79 +222,6 @@
             button.addEventListener('click', () => {
                 const content = button.nextElementSibling;
                 content.style.display = content.style.display === 'block' ? 'none' : 'block';
-            });
-        });
-    </script>
-
-    <script>
-        function showTab(tabName) {
-            document.querySelectorAll(".content").forEach(c => c.style.display = "none");
-            document.getElementById(tabName).style.display = "flex";
-
-            document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-            document.querySelector(`[data-tab='${tabName}']`).classList.add("active");
-        }
-
-        function toggleCollapsible(element) {
-            let content = element.nextElementSibling;
-            content.style.display = content.style.display === "block" ? "none" : "block";
-        }
-
-        function togglePanel(event) {
-            // Исключаем срабатывание при клике на чекбоксы
-            if (event.target.type === "checkbox") return;
-            
-            let content = event.currentTarget.nextElementSibling;
-            content.style.display = content.style.display === "block" ? "none" : "block";
-        }
-
-        function updateCheckboxes(event) {
-            event.stopPropagation(); // 
-            
-            let checkboxes = Array.from(event.currentTarget.parentElement.querySelectorAll("input"));
-
-            if (event.target.checked) {
-                event.target.checked = false;
-
-
-                for (let i = 0; i < checkboxes.length; i++) {
-                    console.log(i)
-                    if (!checkboxes[i].checked) {
-                        console.log(checkboxes[i].checked)
-                        checkboxes[i].checked = true;
-                        break;
-                    }
-                }
-
-            } else { 
-                event.target.checked = true;
-
-
-                for (let i = checkboxes.length - 1; i >= 0; i--) {
-                    if (checkboxes[i].checked) {
-                        checkboxes[i].checked = false;
-                        break;
-                    }
-                }
-
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", function() {
-            showTab("spells");
-
-            document.querySelectorAll(".collapsible").forEach(item => {
-                item.addEventListener("click", function() {
-                    toggleCollapsible(this);
-                });
-            });
-
-            document.querySelectorAll(".panel").forEach(item => {
-                item.addEventListener("click", togglePanel);
-            });
-
-            document.querySelectorAll(".checkbox-group input").forEach(checkbox => {
-                checkbox.addEventListener("click", updateCheckboxes);
             });
         });
     </script>
