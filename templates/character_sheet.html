@@ -31,8 +31,8 @@
             <div class="panel-content">
                 {% for spell in data.Spells.list %}
                     {% if "level" in spell and spell["level"] == i %}
-                        <div class="collapsible">{{ data.Spells.list.spell.name.phantom }}</div>
-                        <div class="collapsible-content">{{ data.Spells.list.spell.description }}</div>
+                        <div class="collapsible">{{ spell["name"]["phantom"] }}</div>
+                        <div class="collapsible-content">{{ spell["description"] }}</div>
                     {% endif %}
                 {% endfor %}
             </div>
