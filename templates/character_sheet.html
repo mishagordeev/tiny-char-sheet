@@ -14,6 +14,7 @@
 
         document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
         document.querySelector(`[data-tab='${tabName}']`).classList.add("active");
+        updateFloatingButton(tabName);
     }
 
     function toggleCollapsible(event) {
@@ -115,10 +116,24 @@
     }
 
     // Дебаунсинг
-    
-    
+    const buttonActions = {
+            stats: () => alert("Действие для вкладки Home!"),
+            items: () => alert("Действие для вкладки Settings!"),
+            feats: null // null означает, что на этой вкладке кнопки не будет
+        };
+
+    function updateFloatingButton(tab) {
+        if (buttonActions[tab]) {
+            floatingButton.style.display = "block";
+            floatingButton.onclick = buttonActions[tab];
+        } else {
+            floatingButton.style.display = "none";
+        }
+    }   
 
     document.addEventListener("DOMContentLoaded", function() {
+
+
         showTab("spells");
 
         document.querySelectorAll(".collapsible").forEach(item => {
@@ -134,6 +149,10 @@
         // });
 
         const inputField = document.getElementById("myInput");
+        const floatingButton = document.getElementById("floatingButton");
+
+
+
         let timeoutId;
 
         inputField.addEventListener("input", function() {
@@ -228,7 +247,7 @@
         {% endfor %}    
     </div>
     <div id="bio" class="content" style="display: none;">👤 Био</div>
-
+    <button id="floatingButton" class="floating-button">+</button>
     <div class="tab-bar">
         <div class="tab active" data-tab="common" onclick="showTab('common')">
             🏠
