@@ -176,7 +176,19 @@
         <span><strong>{{ key }}:</strong> {{ value }}</span>
         {% endfor %}
     </div>
-    <div id="feats" class="content" style="display: none;">🦶 Особенности</div>
+    <div id="feats" class="content" style="display: none;">
+        {% for key, value in data["Feats"].items() %}
+            <div class="panel">{{ key }}</div>
+            <div class="panel-content">
+                {% for item in value %}
+                    <div class="collapsible">{{ item["name"] }}</div>
+                    <div class="collapsible-content">
+                        <p> {{ item["description"] }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}       
+    </div>
     <div id="items" class="content" style="display: none;">
         {% for item in data.Equipment %}
             <div class="collapsible">{{ item["item"] }}</div>
