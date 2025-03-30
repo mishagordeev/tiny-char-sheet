@@ -33,7 +33,7 @@
 
     let timeoutId;
 
-    function editText(event) {
+    function editText(event, field) {
         console.log(event)
         // Очищаем предыдущий таймер
         clearTimeout(timeoutId);
@@ -43,7 +43,7 @@
             const inputValue = event.target.value;
             console.log(event.target.value)
             if (inputValue.trim() !== "") {  // Проверка, что поле не пустое
-                sendDataToServer(inputValue);
+                sendDataToServer(inputValue, field);
             }
         }, 300);  // Задержка 300 мс
     }
@@ -107,12 +107,13 @@
     
 
     // Функция для отправки данных на сервер
-    function sendDataToServer(value) {
+    function sendDataToServer(value, field) {
         // URL сервера
 
         // Данные для отправки
         const data = {
-            inputValue: value
+            inputValue: value,
+            field: field
         };
 
         // Отправка данных на сервер
@@ -184,9 +185,9 @@
     <button onclick="uploadFile()">Загрузить в базу</button>
     <button onclick="downloadFile()">Сохранить из базы</button>
     <div id="common" class="content" style="display: none;">
-        <span><strong>Текущие ПЗ: </strong><input class= "input-field" type="text" value={{data["Hit Points"]["Current"]}}></span>
-        <span><strong>Максимальные ПЗ: </strong><input class= "input-field" type="text" value={{data["Hit Points"]["Maximum"]}}></span>
-        <span><strong>Временные ПЗ: </strong><input class= "input-field" type="text" value={{data["Hit Points"]["Temporal"]}}></span>
+        <span><strong>Текущие ПЗ: </strong><input oninput="((event) => editText(event, 'Hit Points.Current'))(event)" class= "input-field" type="text" value={{data["Hit Points"]["Current"]}}></span>
+        <span><strong>Максимальные ПЗ: </strong><input oninput="((event) => editText(event, 'Hit Points.Maximum'))(event)" class= "input-field" type="text" value={{data["Hit Points"]["Maximum"]}}></span>
+        <span><strong>Временные ПЗ: </strong><input oninput="((event) => editText(event, 'Hit Points.Temporal'))(event)" class= "input-field" type="text" value={{data["Hit Points"]["Temporal"]}}></span>
         <span><strong>Класс брони: </strong>{{data["Armor Class"]}}</span>
         <span><strong>Скорость: </strong>{{data["Speed"]}}</span>
         <span><strong>Бонус мастерства: </strong>{{data["Bonus"]}}</span>
