@@ -31,6 +31,23 @@
         content.style.display = content.style.display === "block" ? "none" : "block";
     }
 
+    let timeoutId;
+
+    function editText(event) {
+        // Очищаем предыдущий таймер
+        clearTimeout(timeoutId);
+
+        // Устанавливаем новый таймер
+        timeoutId = setTimeout(() => {
+            const inputValue = event.target.value;
+            if (inputValue.trim() !== "") {  // Проверка, что поле не пустое
+                sendDataToServer(inputValue);
+            }
+        }, 300);  // Задержка 300 мс
+    }
+
+
+
     function updateCheckboxes(event, level) {
         event.stopPropagation(); 
         
@@ -148,25 +165,15 @@
         //     checkbox.addEventListener("click", updateCheckboxes);
         // });
 
-        const inputField = document.getElementById("myInput");
+        document.querySelectorAll("input-field").forEach(item => {
+            item.addEventListener("input", editText);
+        });
+        
         const floatingButton = document.getElementById("floatingButton");
 
 
 
-        let timeoutId;
 
-        inputField.addEventListener("input", function() {
-        // Очищаем предыдущий таймер
-        clearTimeout(timeoutId);
-
-        // Устанавливаем новый таймер
-        timeoutId = setTimeout(() => {
-            const inputValue = inputField.value;
-            if (inputValue.trim() !== "") {  // Проверка, что поле не пустое
-                sendDataToServer(inputValue);
-            }
-        }, 300);  // Задержка 300 мс
-        });
     });
 </script>
 
@@ -175,7 +182,9 @@
     <button onclick="uploadFile()">Загрузить в базу</button>
     <button onclick="downloadFile()">Сохранить из базы</button>
     <div id="common" class="content" style="display: none;">
-        <input type="text" id="myInput" value={{data["Hit Points"]["Current"]}}>
+        <span><strong>Текущие ПЗ: </strong><input class= "input-field" type="text" value={{data["Hit Points"]["Current"]}}></span>
+        <span><strong>Максимальные ПЗ: </strong><input class= "input-field" type="text" value={{data["Hit Points"]["Maximum"]}}></span>
+        <span><strong>Временные ПЗ: </strong><input class= "input-field" type="text" value={{data["Hit Points"]["Temporal"]}}></span>
         <span><strong>Класс брони: </strong>{{data["Armor Class"]}}</span>
         <span><strong>Скорость: </strong>{{data["Speed"]}}</span>
         <span><strong>Бонус мастерства: </strong>{{data["Bonus"]}}</span>
@@ -270,26 +279,6 @@
     </div>
 
     <script>
-
-        // function updateCheckbox(level, index, checked) {
-        //     console.log(`level ${level} index ${index} checked ${checked}`)
-        //     fetch('/update_checkbox', {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify({
-        //             level: level,
-        //             index: index,
-        //             checked: checked
-        //         }),
-        //     }).then(response => response.json()).then(data => {
-        //         if (data.status !== 'success') {
-        //             console.error('Failed to update checkbox state');
-        //         }
-        //     });
-        // }
-
         function downloadFile() {
             fetch('/download_json')
                 .then(response => response.json())
