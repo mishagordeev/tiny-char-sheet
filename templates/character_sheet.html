@@ -34,12 +34,14 @@
     let timeoutId;
 
     function editText(event) {
+        console.log(event)
         // Очищаем предыдущий таймер
         clearTimeout(timeoutId);
 
         // Устанавливаем новый таймер
         timeoutId = setTimeout(() => {
             const inputValue = event.target.value;
+            console.log(event.target.value)
             if (inputValue.trim() !== "") {  // Проверка, что поле не пустое
                 sendDataToServer(inputValue);
             }
