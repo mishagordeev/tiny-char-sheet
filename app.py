@@ -102,10 +102,15 @@ def update_field():
             return jsonify({"error": "Character data not found"}), 404
         
         character_data = doc.to_dict()
-
-        value = data["value"]
+        
         field = data["field"]
-        character_data[field] = value
+        value = data["value"]
+
+        current = character_data
+
+        for key in field[:-1]:  # Идём по всем ключам, кроме последнего
+            current = current.setdefault(key, {})
+        current[field[-1]] = value  # Устанавливаем финальное значение
         
         doc_ref.set(character_data)
         
