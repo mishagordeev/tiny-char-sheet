@@ -214,7 +214,7 @@
                 {% for item in value %}
                     <div class="collapsible">{{ item["name"] }}</div>
                     <div class="collapsible-content">
-                        {{ item["description"] }}
+                        {{ item["description"] | safe }}
                     </div>
                 {% endfor %}
             </div>
