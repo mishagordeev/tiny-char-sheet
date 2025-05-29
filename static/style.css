@@ -52,6 +52,9 @@ body {
 
 /* Стили для списка с раскрывающимися элементами */
 .collapsible {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     width: 100%;
     max-width: 400px;
     background: white;
@@ -62,6 +65,16 @@ body {
     cursor: pointer;
     text-align: left;
     font-weight: bold;
+}
+
+.collapsible-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.collapsible-label {
+    flex-grow: 1;
 }
 
 .collapsible-content {

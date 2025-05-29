@@ -222,7 +222,10 @@
     </div>
     <div id="items" class="content" style="display: none;">
         {% for item in data.Equipment %}
-            <div class="collapsible">{{ item["item"] }}</div>
+            <div class="collapsible">
+                <img src="/static/img/token-runed-circle-green.webp" class="collapsible-icon" alt="icon">
+                <span class="collapsible-label">{{ item["item"] }}</span>
+            </div>
             <div class="collapsible-content">
                 <p> {{ item["description"] }}</p>
             </div>
