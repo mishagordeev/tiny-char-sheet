@@ -217,7 +217,7 @@
     <div id="stats" class="content" style="display: none;">
         <h2>Характеристики</h2>
         {% for key, value in data["abilities"].items() %}
-        <span><strong>{{ key }}:</strong>{% raw %}{{ calculateModifier(value["value"]) }}{% endraw %}</span>
+        <span><strong>{{ key }}:</strong>{% raw %}calculateModifier(value["value"]){% endraw %}</span>
         {% endfor %}
         <h2>Испытания</h2>
         {% for key, value in data["Saves"].items() %}
