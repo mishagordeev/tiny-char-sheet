@@ -195,8 +195,8 @@
     </div>
     <div id="stats" class="content" style="display: none;">
         <h2>Характеристики</h2>
-        {% for key, value in data["Attributes"].items() %}
-        <span><strong>{{ key }}:</strong> {{ value }}</span>
+        {% for key, value in data["abilities"].items() %}
+        <span><strong>{{ key }}:</strong> {{ value["value"] }}</span>
         {% endfor %}
         <h2>Испытания</h2>
         {% for key, value in data["Saves"].items() %}
@@ -208,11 +208,11 @@
             <div class="skill-column">
                 {% for item in data["Skills"] %}
                 <div class="skill-item">
-                    <div class="skill-attribute">{{ item["ability"] }}</div>
+                    <div class="skill-attribute">{{ data.abilities[item.ability].short }}</div>
                     <div class="skill-name">{{ item["name"] }}</div>
                     <div class="skill-numbers">
                         <div class="skill-modifier">{{ item["bonus"] }}</div>
-                        <div class="skill-value">{{ item["passive"] }}</div>
+                        <div class="skill-value">{{ (item["passive"] + 2)|string }}</div>
                     </div>
                 </div>
                 {% endfor %}
