@@ -203,8 +203,16 @@
         <span><strong>{{ key }}:</strong> {{ value }}</span>
         {% endfor %}
         <h2>Навыки</h2>
-        {% for key, value in data["Skills"].items() %}
-        <span><strong>{{ key }}:</strong> {{ value }}</span>
+        {% for item in data["Skills"].items() %}
+
+        <div class="skill-item">
+            <div class="skill-attribute">{{ item["ability"] }}</div>
+            <div class="skill-name">{{ item["name"] }}</div>
+            <div class="skill-numbers">
+                <div class="skill-modifier">{{ item["bonus"] }}</div>
+                <div class="skill-value">{{ item["passive"] }}</div>
+            </div>
+        </div>
         {% endfor %}
     </div>
     <div id="feats" class="content" style="display: none;">
