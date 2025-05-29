@@ -202,9 +202,9 @@
         {% for key, value in data["Saves"].items() %}
         <span><strong>{{ key }}:</strong> {{ value }}</span>
         {% endfor %}
+        
         <h2>Навыки</h2>
-        {% for item in data["Skills"].items() %}
-
+        {% for item in data["Skills"] %}
         <div class="skill-item">
             <div class="skill-attribute">{{ item["ability"] }}</div>
             <div class="skill-name">{{ item["name"] }}</div>
