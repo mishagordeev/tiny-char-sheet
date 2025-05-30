@@ -292,7 +292,12 @@
         {% for key, value in data["Feats"].items() %}
             <div class="panel">{{ value.label }}</div>
             <div class="panel-content">
-
+                {% for item in value.list %}
+                    <div class="collapsible">{{ item["name"] }}</div>
+                    <div class="collapsible-content">
+                        {{ item["description"] | safe }}
+                    </div>
+                {% endfor %}
             </div>
         {% endfor %}       
     </div>
