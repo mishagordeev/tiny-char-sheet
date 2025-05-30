@@ -197,8 +197,15 @@
         <span><strong>{{ key }}:</strong>{{ (value["score"] - 10) // 2 }}</span>
         {% endfor %}
         <h2>Испытания</h2>
-        {% for key, value in data["Saves"].items() %}
-        <span><strong>{{ key }}:</strong> {{ value }}</span>
+        {% for key, item in data["Saves"].items() %}
+            {% if data.abilities[item.ability].save == "true" %}
+                {% set value = (data.abilities[item.ability].score - 10) // 2 + data["Bonus"] %}
+            {% else %}
+                {% set value = (data.abilities[item.ability].score - 10) // 2 %}    
+            {% endif %}
+
+
+        <span><strong>{{ key }}:</strong> {{ ("+" if value > 0 else "") ~ value }}</span>
         {% endfor %}
         
         <h2>Навыки</h2>
