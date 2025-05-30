@@ -206,12 +206,12 @@
             <div class="skill-column">
                 {% for item in data["Skills"] %}
                 <div class="skill-item">
-                    <div class="skill-indicator"></div>
+                    <div class="skill-indicator {% if item["proficiency"] == "proficiency" %}filled{% elif item["proficiency"] == "expertise" %}circled{% elif item["proficiency"] == "half" %}half-filled{% endif %}"></div>
                     <div class="skill-attribute">{{ data.abilities[item.ability].short }}</div>
                     <div class="skill-name">{{ item["name"] }}</div>
                     <div class="skill-numbers">
                         <div class="skill-modifier">{{ item["bonus"] }}</div>
-                        <div class="skill-value">{{ (item["passive"] + 2)|string }}</div>
+                        <div class="skill-value">{{ (item["bonus"] + 2)|string }}</div>
                     </div>
                 </div>
                 {% endfor %}
