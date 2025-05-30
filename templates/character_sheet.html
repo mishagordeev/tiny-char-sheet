@@ -221,7 +221,17 @@
                                 {{ (data.abilities[item.ability].score - 10) // 2 }}
                             {% endif %}
                         </div>
-                        <div class="skill-value">{{ item["bonus"] }}</div>
+                        <div class="skill-value">
+                            {% if item["proficiency"] == "proficiency" %}
+                                {{ (data.abilities[item.ability].score - 10) // 2 + data["Bonus"] + 10 }}
+                            {% elif item["proficiency"] == "expertise" %}
+                                {{ (data.abilities[item.ability].score - 10) // 2 + data["Bonus"] + data["Bonus"] + 10}}
+                            {% elif item["proficiency"] == "half" %}
+                                {{ (data.abilities[item.ability].score - 10) // 2 + data["Bonus"] // 2 + 10}}
+                            {% else %}
+                                {{ (data.abilities[item.ability].score - 10) // 2 + 10}}
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
                 {% endfor %}
