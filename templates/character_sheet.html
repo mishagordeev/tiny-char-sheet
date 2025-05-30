@@ -203,8 +203,6 @@
             {% else %}
                 {% set value = (item.score - 10) // 2 %}    
             {% endif %}
-
-
         <span><strong>{{ key }}:</strong> {{ ("+" if value > 0 else "") ~ value }}</span>
         {% endfor %}
         
@@ -240,6 +238,22 @@
                             {% else %}
                                 {{ (data.abilities[item.ability].score - 10) // 2 + 10}}
                             {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <h2>Инструменты</h2>
+        <div class="skill-columns">
+            <div class="skill-column">
+                {% for item in data["Tools"] %}
+                <div class="skill-item">
+                    <div class="skill-indicator filled"></div>
+                    <div class="skill-name">{{ item["name"] }}</div>
+                    <div class="skill-numbers">
+                        <div class="skill-modifier">
+                            {{ ("+" data["Bonus"] }}
                         </div>
                     </div>
                 </div>
