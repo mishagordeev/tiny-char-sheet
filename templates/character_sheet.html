@@ -201,7 +201,7 @@
             {% if item.save == "true" %}
                 {% set value = (item.score - 10) // 2 + data["Bonus"] %}
             {% else %}
-                {% set value = (item.score - 10) // 2 %}    
+                {% set value = (item.score - 10) // 2 + data["Bonus"] %}    
             {% endif %}
 
 
