@@ -212,13 +212,13 @@
                     <div class="skill-numbers">
                         <div class="skill-modifier">
                             {% if item["proficiency"] == "proficiency" %}
-                                {{ (data.abilities[item.ability].score - 10 // 2) + data["Bonus"] }}
+                                {{ (data.abilities[item.ability].score - 10) // 2 + data["Bonus"] }}
                             {% elif item["proficiency"] == "expertise" %}
-                                {{ (data.abilities[item.ability].score - 10 // 2) + data["Bonus"] + data["Bonus"] }}
+                                {{ (data.abilities[item.ability].score - 10) // 2 + data["Bonus"] + data["Bonus"] }}
                             {% elif item["proficiency"] == "half" %}
-                                {{ (data.abilities[item.ability].score - 10 // 2) + data["Bonus"] // 2 }}
+                                {{ (data.abilities[item.ability].score - 10) // 2 + data["Bonus"] // 2 }}
                             {% else %}
-                                {{ (data.abilities[item.ability].score - 10 // 2) }}
+                                {{ (data.abilities[item.ability].score - 10) // 2 }}
                             {% endif %}
                         </div>
                         <div class="skill-value">{{ item["bonus"] }}</div>
