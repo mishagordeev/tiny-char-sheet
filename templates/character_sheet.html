@@ -198,10 +198,10 @@
         {% endfor %}
         <h2>Испытания</h2>
         {% for key, item in data["abilities"].items() %}
-            {% if item.save == "true" %}
+            {% if item.save == true %}
                 {% set value = (item.score - 10) // 2 + data["Bonus"] %}
             {% else %}
-                {% set value = (item.score - 10) // 2 + data["Bonus"] %}    
+                {% set value = (item.score - 10) // 2 %}    
             {% endif %}
 
 
