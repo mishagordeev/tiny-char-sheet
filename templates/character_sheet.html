@@ -197,15 +197,30 @@
         <span><strong>{{ key }}:</strong>{{ (value["score"] - 10) // 2 }}</span>
         {% endfor %}
         <h2>Испытания</h2>
-        {% for key, item in data["abilities"].items() %}
-            {% if item.save == true %}
-                {% set value = (item.score - 10) // 2 + data["Bonus"] %}
-            {% else %}
-                {% set value = (item.score - 10) // 2 %}    
-            {% endif %}
-        <span><strong>{{ key }}:</strong> {{ ("+" if value > 0 else "") ~ value }}</span>
-        {% endfor %}
-        
+
+        <div class="skill-columns">
+            <div class="skill-column">
+                {% for key, item in data["abilities"].items() %}
+                <div class="skill-item">
+                    <div class="skill-indicator {% if item.save == true %}filled{% endif %}"></div>
+                    <div class="skill-attribute">{{ item.short }}</div>
+                    <div class="skill-name">{{ item["name"] }}</div>
+                    <div class="skill-numbers">
+                        <div class="skill-modifier">
+                            {% if item.save == true %}
+                                {% set value = (item.score - 10) // 2 + data["Bonus"] %}
+                            {% else %}
+                                {% set value = (item.score - 10) // 2 %}    
+                            {% endif %}
+
+                            {{ ("+" if value > 0 else "") ~ value }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>  
+             
         <h2>Навыки</h2>
         <div class="skill-columns">
             <div class="skill-column">
