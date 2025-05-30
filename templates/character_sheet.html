@@ -184,9 +184,9 @@
     <button onclick="downloadFile()">Сохранить из базы</button>
     <div id="common" class="content" style="display: none;">
         <div class="abilities">
-            <div class="ability">18</div>
-            <div class="ability">18</div>
-            <div class="ability">18</div>
+            <div class="ability">{{data["Armor Class"]}}</div>
+            <div class="ability">{{data["Initiative"]}}</div>
+            <div class="ability">{{data["Speed"]}}</div>
         </div>
         <span><strong>Текущие ПЗ: </strong><input oninput="((event) => editText(event, ['Hit Points', 'Current']))(event)" class= "input-field" type="text" value={{data["Hit Points"]["Current"]}}></span>
         <span><strong>Максимальные ПЗ: </strong><input oninput="((event) => editText(event, ['Hit Points', 'Maximum']))(event)" class= "input-field" type="text" value={{data["Hit Points"]["Maximum"]}}></span>
