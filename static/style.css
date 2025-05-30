@@ -21,6 +21,27 @@ body {
     padding-bottom: 150px; /* Добавляем отступ снизу для панели */
 }
 
+.abilities {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+        
+.ability {
+    width: 80px;
+    height: 80px;
+    background: #1c3b5a;
+    border: 2px solid #4cc9f0;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 42px;
+    font-weight: bold;
+    color: #f0f0f0;
+    box-shadow: 0 0 15px rgba(76, 201, 240, 0.2);
+}
+
 .tab-bar {
     display: flex;
     position: fixed;
